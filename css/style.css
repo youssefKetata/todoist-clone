@@ -1,0 +1,304 @@
+:root {
+  --clr-primary: rgb(255, 255, 255);
+  --clr-secondary: rgb(252, 250, 248);
+  --clr-accent: rgb(220, 76, 62);
+  --clr-accent-light: rgb(255, 239, 229);
+  --clr-secondary-dark: rgb(243, 239, 236);
+  --reactist-font-family: system-ui, "Segoe UI", Roboto, "Helvetica Neue",
+    sans-serif;
+
+  --ff-primary: var(--reactist-font-family);
+  --ff-secondary: "Open Sans", sans-serif;
+
+  --fw-400: 400;
+  --fw-600: 600;
+  --fw-700: 700;
+
+  --fs-500: 1.1rem;
+  --fs-400: 1rem;
+  --fs-300: 0.9rem;
+  --fs-200: 0.8rem;
+  --fs-700: 2rem;
+  --fs-600: 1.3rem;
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul,
+ol,
+a {
+  list-style: none;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  font-family: Arial, sans-serif;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* css */
+.cdn-failback-error {
+  display: none;
+  color: rgb(233, 232, 231);
+}
+
+.container {
+  display: flex;
+}
+
+.side-bar-container {
+  position: static;
+  --sidebar-paddingInline: 2rem;
+  --sidebar-width: 300px; /* Adjust default width */
+  position: relative;
+  padding-top: 1rem;
+  background-color: rgba(241, 241, 241, 0.884);
+  width: var(--sidebar-width);
+  max-width: 100% !important;
+  padding-inline: var(--sidebar-paddingInline);
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100vh;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  margin-block: 1rem;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.collapse_icon {
+  position: absolute;
+  right: 25px;
+  transition: margin-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+ul {
+  padding: 0;
+}
+
+ul > li {
+  display: flex;
+}
+
+ul > li:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+span {
+  margin-left: auto;
+}
+
+.main_content {
+  flex: 1; /* Fills remaining space */
+  padding: 3.5rem;
+  transition: padding-inline 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+h1 {
+  padding-bottom: 2rem;
+}
+
+p,
+.main_content-title {
+  padding-inline: 1rem;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+}
+
+.resize-handle {
+  width: 4px;
+  height: 100%;
+  background-color: rgb(207, 207, 207);
+  cursor: col-resize;
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.resize-handle:hover {
+  opacity: 1;
+}
+
+.overlay {
+  position: fixed;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 750px) {
+  .resize-handle {
+    display: none;
+  }
+  .collapse_icon {
+    margin-right: -60px;
+  }
+  .content {
+    padding-inline: 2rem !important;
+  }
+}
+
+/* modal style */
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 450px;
+  padding: 1.3rem;
+  min-height: 250px;
+  position: absolute;
+  z-index: 2;
+  top: 20%;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 15px 50px 0px;
+}
+
+/* .modal .flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal input {
+  padding: 0.7rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+
+.modal p {
+  font-size: 0.9rem;
+  color: #777;
+  margin: 0.4rem 0 0.2rem;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.4rem;
+  font-weight: 700;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1em;
+}
+
+.btn-open {
+  position: absolute;
+  bottom: 150px;
+}
+
+.btn-close {
+  transform: translate(10px, -20px);
+  padding: 0.5rem 0.7rem;
+  background: #eee;
+  border-radius: 50%;
+} */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  /* background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 1; */
+}
+
+.hidden {
+  display: none;
+}
+
+/* end Modal style */

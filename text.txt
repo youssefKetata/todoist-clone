@@ -27,3 +27,5 @@ design
  maybe implement osme features of taskboard.com, pick and put feature
 
  add shortcuts to open and close side bar
+
+ create another modal using dialog element in html
