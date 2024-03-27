@@ -46,36 +46,20 @@ const todoList = (() => {
   return { addTodo, removeTodo, getTodos };
 })();
 
-// modal
+// dialog box
+const openDialogButton = document.getElementById("openDialog");
+const myDialog = document.getElementById("myDialog");
+const closeDialog = document.querySelector(".closeDialog");
 
-const modal = document.querySelector(".modal");
-const overlay = document.querySelector(".overlay");
-const openModalBtn = document.querySelector(".btn-open");
-console.log(openModalBtn);
-const closeModalBtn = document.querySelector(".btn-close");
-
-// close modal function
-const closeModal = function () {
-  modal.classList.add("hidden");
-  overlay.classList.add("hidden");
-};
-
-// close the modal when the close button and overlay is clicked
-closeModalBtn.addEventListener("click", closeModal);
-overlay.addEventListener("click", closeModal);
-
-// close modal when the Esc key is pressed
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape" && !modal.classList.contains("hidden")) {
-    closeModal();
+openDialogButton.addEventListener("click", () => {
+  myDialog.showModal();
+});
+closeDialog.addEventListener("click", () => {
+  myDialog.close();
+});
+myDialog.addEventListener("click", (event) => {
+  console.log(event.target);
+  if (event.target === myDialog) {
+    myDialog.close();
   }
 });
-
-// open modal function
-const openModal = function () {
-  console.log("open modal");
-  modal.classList.remove("hidden");
-  overlay.classList.remove("hidden");
-};
-// open modal event
-openModalBtn.addEventListener("click", openModal);

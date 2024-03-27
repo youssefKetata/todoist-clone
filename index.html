@@ -11,8 +11,6 @@
       href="./assets/images/favicon-32x32.png"
     />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/dynamic-sidebar.css" />
-
     <title>To do app</title>
   </head>
   <body>
@@ -51,33 +49,9 @@
     <div class="container">
       <!-- side bar -->
       <section class="side-bar-container">
-        <div class="sidebar-header">
-          <h3>sidebar</h3>
-          <button
-            rule="button"
-            class="collapse_icon"
-            aria-label="collapse button"
-          >
-            <svg
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="#666666"
-                fill-rule="evenodd"
-                d="M19 4.001H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-12a2 2 0 0 0-2-2Zm-15 2a1 1 0 0 1 1-1h4v14H5a1 1 0 0 1-1-1v-12Zm6 13h9a1 1 0 0 0 1-1v-12a1 1 0 0 0-1-1h-9v14Z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </button>
-        </div>
         <nav class="side-bar_navigation">
           <div class="user-info">
-            <button>
+            <button aria-expanded="false" class="user-menu-botton">
               <img
                 alt="profile image"
                 src="./assets/images/blank-profile-picture.jpg"
@@ -100,25 +74,52 @@
                 ></path>
               </svg>
             </button>
-            <div>
-              <svg
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
+            <div class="sidebar-header-action">
+              <button
+                role="button"
+                class="notification_icon"
+                aria-label="notification button"
               >
-                <path
-                  fill="#666666"
-                  fill-rule="evenodd"
-                  d="m6.585 15.388-.101.113c-.286.322-.484.584-.484 1h12c0-.416-.198-.678-.484-1l-.101-.113c-.21-.233-.455-.505-.7-.887-.213-.33-.355-.551-.458-.79-.209-.482-.256-1.035-.4-2.71-.214-3.5-1.357-5.5-3.857-5.5s-3.643 2-3.857 5.5c-.144 1.675-.191 2.227-.4 2.71-.103.239-.245.46-.457.79-.246.382-.491.654-.701.887Zm10.511-2.312c-.083-.341-.131-.862-.241-2.148-.113-1.811-.469-3.392-1.237-4.544C14.8 5.157 13.57 4.5 12 4.5c-1.571 0-2.8.656-3.618 1.883-.768 1.152-1.124 2.733-1.237 4.544-.11 1.286-.158 1.807-.241 2.148-.062.253-.13.373-.46.884-.198.308-.373.504-.57.723-.074.081-.15.166-.232.261-.293.342-.642.822-.642 1.557a1 1 0 0 0 1 1h3a3 3 0 0 0 6 0h3a1 1 0 0 0 1-1c0-.735-.35-1.215-.642-1.557-.082-.095-.158-.18-.232-.261-.197-.22-.372-.415-.57-.723-.33-.511-.398-.63-.46-.884ZM14 17.5h-4a2 2 0 1 0 4 0Z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
+                <svg
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="#666666"
+                    fill-rule="evenodd"
+                    d="m6.585 15.388-.101.113c-.286.322-.484.584-.484 1h12c0-.416-.198-.678-.484-1l-.101-.113c-.21-.233-.455-.505-.7-.887-.213-.33-.355-.551-.458-.79-.209-.482-.256-1.035-.4-2.71-.214-3.5-1.357-5.5-3.857-5.5s-3.643 2-3.857 5.5c-.144 1.675-.191 2.227-.4 2.71-.103.239-.245.46-.457.79-.246.382-.491.654-.701.887Zm10.511-2.312c-.083-.341-.131-.862-.241-2.148-.113-1.811-.469-3.392-1.237-4.544C14.8 5.157 13.57 4.5 12 4.5c-1.571 0-2.8.656-3.618 1.883-.768 1.152-1.124 2.733-1.237 4.544-.11 1.286-.158 1.807-.241 2.148-.062.253-.13.373-.46.884-.198.308-.373.504-.57.723-.074.081-.15.166-.232.261-.293.342-.642.822-.642 1.557a1 1 0 0 0 1 1h3a3 3 0 0 0 6 0h3a1 1 0 0 0 1-1c0-.735-.35-1.215-.642-1.557-.082-.095-.158-.18-.232-.261-.197-.22-.372-.415-.57-.723-.33-.511-.398-.63-.46-.884ZM14 17.5h-4a2 2 0 1 0 4 0Z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+              <button
+                rule="button"
+                class="collapse_icon"
+                aria-label="collapse button"
+              >
+                <svg
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="#666666"
+                    fill-rule="evenodd"
+                    d="M19 4.001H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-12a2 2 0 0 0-2-2Zm-15 2a1 1 0 0 1 1-1h4v14H5a1 1 0 0 1-1-1v-12Zm6 13h9a1 1 0 0 0 1-1v-12a1 1 0 0 0-1-1h-9v14Z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
             </div>
           </div>
-          <div tabindex="0" type="button" class="button-add-task">
+          <div tabindex="0" type="button" class="button-add-task" id="openDialog">
             <svg
               xmlns:xlink="http://www.w3.org/1999/xlink"
               xmlns="http://www.w3.org/2000/svg"
@@ -218,9 +219,14 @@
               </ul>
             </div>
             <div class="my-projects-nav">
-              <div>
+              <div class="my-projects-nav_header">
+                
                 <span>My Projects</span>
-                <buton>
+                <button
+                  aria-label="Add project"
+                  type="button"
+                  class="add_project"
+                >
                   <svg
                     xmlns:xlink="http://www.w3.org/1999/xlink"
                     xmlns="http://www.w3.org/2000/svg"
@@ -308,8 +314,8 @@
         </p>
       </section>
     </div>
-    <!-- modal -->
-    <section class="modal hidden">
+    <!-- modal
+    <section class="modalf hidden">
       <div class="flex">
         <button class="btn-close">⨉</button>
       </div>
@@ -330,7 +336,7 @@
               type="text"
               class="task_editor--input"
               placeholder="Add a due date"
-            /> -->
+            /> 
           </div>
         </div>
         <div>
@@ -400,11 +406,100 @@
           </div>
         </div>
       </form>
-    </section>
+    </section> -->
 
-    <div class="overlay hidden"></div>
+
+
+    <dialog id="myDialog">
+      <form class="task_editor">
+        <div class="task_editor--editing-area">
+          <div class="task_editor--input-fields">
+            <input
+              type="text"
+              class="task_editor--input"
+              placeholder="What needs to be done?"
+            />
+            <input
+              type="text"
+              class="task_editor--input"
+              placeholder="Add a description"
+            />
+          </div>
+        </div>
+        <div>
+          <input type="date" class="task_editor--input" />
+          <input type="dropdown" class="task_editor--input" />
+        </div>
+        <div class="task_editor--footer">
+          <button
+            aria-label="Select a project"
+            aria-controls="dropdown-select-1-popup"
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            type="button"
+            aria-disabled="false"
+            class=""
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 16 16"
+              class="AyswQEh"
+            >
+              <path
+                fill="currentColor"
+                fill-rule="evenodd"
+                d="M5.509 2h4.982a2 2 0 0 1 1.923 1.45l1.509 5.28c.051.18.077.365.077.55V12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.28a2 2 0 0 1 .077-.55l1.509-5.28A2 2 0 0 1 5.509 2Zm0 1a1 1 0 0 0-.962.726l-1.509 5.28A1 1 0 0 0 3 9.28V12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V9.28a.997.997 0 0 0-.039-.274l-1.508-5.28A1 1 0 0 0 10.49 3H5.51Zm4.685 7a2.25 2.25 0 0 1-4.388 0H4.5a.5.5 0 1 1 0-1h1.75a.5.5 0 0 1 .5.5 1.25 1.25 0 0 0 2.5 0 .5.5 0 0 1 .5-.5h1.75a.5.5 0 0 1 0 1h-1.306Z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span class="tNSJrRU">Inbox</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+            >
+              <path
+                fill="currentColor"
+                d="M7.646 9.646 4.854 6.854A.5.5 0 0 1 5.207 6h5.586a.5.5 0 0 1 .353.854L8.354 9.646a.5.5 0 0 1-.708 0Z"
+              ></path>
+            </svg>
+          </button>
+          <div class="task_editor__footer__action-buttons">
+            <button
+              aria-label="Cancel"
+              type="button"
+              aria-disabled="false"
+              class=""
+            >
+              <span class="_0051d171 fb8d74bb _1c09cd18 _68aab614"
+                >Cancel</span
+              ></button
+            ><button
+              aria-label="Add task"
+              type="button"
+              aria-disabled="true"
+              class=""
+            >
+              <span class="_0051d171 fb8d74bb _1c09cd18 _68aab614"
+                >Add task</span
+              >
+            </button>
+          </div>
+        </div>
+      </form>
+      <button class="closeDialog">Close</button>
+    </dialog>
+
+    
     <button class="btn btn-open">Add task</button>
     <button class="btn btn-open">Add project</button>
+
 
     <!-- js files -->
     <script src="js/app.js" defer></script>

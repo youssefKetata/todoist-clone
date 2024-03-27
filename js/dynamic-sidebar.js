@@ -58,7 +58,7 @@ function handleCollapse() {
   else {
     if (sidebar_marginLeft === 0) {
       hideSideBar(width);
-      resizeHandle.style.display = "none"; // hide resize handle
+      // resizeHandle.style.display = "none"; // hide resize handle
     } else {
       showSideBar();
       resizeHandle.style.display = "block";
