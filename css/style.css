@@ -1,6 +1,3 @@
-.redoutline {
-  outline: 1px solid red;
-}
 :root {
   --clr-primary: rgb(255, 255, 255);
   --clr-secondary: rgb(252, 250, 248);
