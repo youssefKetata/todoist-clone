@@ -29,3 +29,5 @@ design
  add shortcuts to open and close side bar
 
  create another modal using dialog element in html
+
+ - create timetable for socializers community

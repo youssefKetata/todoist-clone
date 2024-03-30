@@ -1,2 +1,4 @@
 node_modules/
-text.txt
+
+# ignore text files
+*.txt
