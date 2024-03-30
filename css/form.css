@@ -1,0 +1,60 @@
+input {
+  all: unset;
+}
+
+.task_editor--input-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.task_editor--input--title {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.task_editor--input--description {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.task_editor--chose-field {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.task_editor--footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.task_editor__footer__action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.task_editor__footer__action-buttons .add-task {
+  background-color: var(--clr-accent);
+  color: var(--clr-primary);
+}
+
+.task_editor__footer__action-buttons button {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+
+  background-color: var(--btn-idle-tint-light);
+  color: var(--btn-text-idle);
+}
+
+.task_editor__footer__action-buttons button:hover {
+  background-color: var(--clr-accent-dark);
+}
+
+.task_editor__footer__action-buttons button:disabled {
+  background-color: var(--clr-accent-disabled);
+  color: var(--clr-primary);
+  cursor: not-allowed;
+}

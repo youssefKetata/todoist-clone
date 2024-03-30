@@ -11,6 +11,7 @@
       href="./assets/images/favicon-32x32.png"
     />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/form.css" />
     <title>To do app</title>
   </head>
   <body>
@@ -119,7 +120,12 @@
               </button>
             </div>
           </div>
-          <div tabindex="0" type="button" class="button-add-task" id="openDialog">
+          <div
+            tabindex="0"
+            type="button"
+            class="button-add-task"
+            id="openDialog"
+          >
             <svg
               xmlns:xlink="http://www.w3.org/1999/xlink"
               xmlns="http://www.w3.org/2000/svg"
@@ -220,7 +226,6 @@
             </div>
             <div class="my-projects-nav">
               <div class="my-projects-nav_header">
-                
                 <span>My Projects</span>
                 <button
                   aria-label="Add project"
@@ -239,7 +244,7 @@
                       d="M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z"
                     ></path>
                   </svg>
-                </buton>
+                </button>
                 <button>
                   <svg
                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -293,7 +298,12 @@
       <div class="resize-handle"></div>
       <!-- main content -->
       <section aria-label="Main content" id="content" class="main_content">
+        <!-- projects list -->
+        <div id="project-list"></div>
         <h1 class="main_content-title">main content</h1>
+        <button class="btn btn-open-dialog" id="btn-open-dialog">
+          Add task
+        </button>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -314,37 +324,60 @@
         </p>
       </section>
     </div>
-    <!-- modal
-    <section class="modalf hidden">
-      <div class="flex">
-        <button class="btn-close">⨉</button>
-      </div>
-      <form class="task_editor">
+
+    <dialog id="dialog-wrapper" class="dialog-wrapper">
+      <form class="task_editor" id="newTodo-form">
         <div class="task_editor--editing-area">
           <div class="task_editor--input-fields">
             <input
               type="text"
-              class="task_editor--input"
-              placeholder="What needs to be done?"
+              class="task_editor--input task_editor--input--title"
+              placeholder="Task name"
+              id="todo-title"
             />
             <input
               type="text"
-              class="task_editor--input"
-              placeholder="Add a description"
+              class="task_editor--input task_editor--input--description"
+              placeholder="description"
+              id="todo-description"
             />
-            <!-- <input
-              type="text"
-              class="task_editor--input"
-              placeholder="Add a due date"
-            /> 
           </div>
         </div>
-        <div>
-          <input type="date" class="task_editor--input" />
-          <input type="dropdown" class="task_editor--input" />
+        <div class="task_editor--chose-field">
+          <input type="date" class="task_editor--input" id="todo-dueDate" />
+          <!-- <input
+            type="dropdown"
+            class="task_editor--input task_editor--input--priority"
+          /> -->
+          <select
+            class="task_editor--input task_editor--input--priority"
+            id="todo-priority"
+          >
+            <option value="1">🚩Low</option>
+            <option value="2">🏴Medium</option>
+            <option value="3">🏳️High</option>
+          </select>
+
+          <!-- <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+            class="g1pQExb"
+            data-icon-name="priority-icon"
+            data-priority="1"
+          >
+            <path
+              fill="green"
+              fill-rule="evenodd"
+              d="M4.223 4.584A.5.5 0 0 0 4 5v14.5a.5.5 0 0 0 1 0v-5.723C5.886 13.262 7.05 13 8.5 13c.97 0 1.704.178 3.342.724 1.737.58 2.545.776 3.658.776 1.759 0 3.187-.357 4.277-1.084A.5.5 0 0 0 20 13V4.5a.5.5 0 0 0-.777-.416C18.313 4.69 17.075 5 15.5 5c-.97 0-1.704-.178-3.342-.724C10.421 3.696 9.613 3.5 8.5 3.5c-1.758 0-3.187.357-4.277 1.084Z"
+              clip-rule="evenodd"
+            ></path>
+          </svg> -->
         </div>
         <div class="task_editor--footer">
-          <button
+          <select
             aria-label="Select a project"
             aria-controls="dropdown-select-1-popup"
             aria-expanded="false"
@@ -352,7 +385,12 @@
             type="button"
             aria-disabled="false"
             class=""
+            id="todo-project"
           >
+            <option value="Default">Default</option>
+            <option value="Work">Work</option>
+            <option value="School">School</option>
+            <option value="Personal">Personal</option>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -382,124 +420,33 @@
                 d="M7.646 9.646 4.854 6.854A.5.5 0 0 1 5.207 6h5.586a.5.5 0 0 1 .353.854L8.354 9.646a.5.5 0 0 1-.708 0Z"
               ></path>
             </svg>
-          </button>
+          </select>
           <div class="task_editor__footer__action-buttons">
             <button
               aria-label="Cancel"
               type="button"
               aria-disabled="false"
-              class=""
+              class="closeDialog"
             >
-              <span class="_0051d171 fb8d74bb _1c09cd18 _68aab614"
-                >Cancel</span
-              ></button
+              <span class="">Cancel</span></button
             ><button
+              disabled
               aria-label="Add task"
-              type="button"
+              type="submit"
+              formmethod="dialog"
               aria-disabled="true"
-              class=""
+              class="add-task"
+              id="add-task"
             >
-              <span class="_0051d171 fb8d74bb _1c09cd18 _68aab614"
-                >Add task</span
-              >
+              <span class="">Add task</span>
             </button>
           </div>
         </div>
       </form>
-    </section> -->
-
-
-
-    <dialog id="myDialog">
-      <form class="task_editor">
-        <div class="task_editor--editing-area">
-          <div class="task_editor--input-fields">
-            <input
-              type="text"
-              class="task_editor--input"
-              placeholder="What needs to be done?"
-            />
-            <input
-              type="text"
-              class="task_editor--input"
-              placeholder="Add a description"
-            />
-          </div>
-        </div>
-        <div>
-          <input type="date" class="task_editor--input" />
-          <input type="dropdown" class="task_editor--input" />
-        </div>
-        <div class="task_editor--footer">
-          <button
-            aria-label="Select a project"
-            aria-controls="dropdown-select-1-popup"
-            aria-expanded="false"
-            aria-haspopup="listbox"
-            type="button"
-            aria-disabled="false"
-            class=""
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="none"
-              viewBox="0 0 16 16"
-              class="AyswQEh"
-            >
-              <path
-                fill="currentColor"
-                fill-rule="evenodd"
-                d="M5.509 2h4.982a2 2 0 0 1 1.923 1.45l1.509 5.28c.051.18.077.365.077.55V12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.28a2 2 0 0 1 .077-.55l1.509-5.28A2 2 0 0 1 5.509 2Zm0 1a1 1 0 0 0-.962.726l-1.509 5.28A1 1 0 0 0 3 9.28V12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V9.28a.997.997 0 0 0-.039-.274l-1.508-5.28A1 1 0 0 0 10.49 3H5.51Zm4.685 7a2.25 2.25 0 0 1-4.388 0H4.5a.5.5 0 1 1 0-1h1.75a.5.5 0 0 1 .5.5 1.25 1.25 0 0 0 2.5 0 .5.5 0 0 1 .5-.5h1.75a.5.5 0 0 1 0 1h-1.306Z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-            <span class="tNSJrRU">Inbox</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="none"
-              viewBox="0 0 16 16"
-              aria-hidden="true"
-            >
-              <path
-                fill="currentColor"
-                d="M7.646 9.646 4.854 6.854A.5.5 0 0 1 5.207 6h5.586a.5.5 0 0 1 .353.854L8.354 9.646a.5.5 0 0 1-.708 0Z"
-              ></path>
-            </svg>
-          </button>
-          <div class="task_editor__footer__action-buttons">
-            <button
-              aria-label="Cancel"
-              type="button"
-              aria-disabled="false"
-              class=""
-            >
-              <span class="_0051d171 fb8d74bb _1c09cd18 _68aab614"
-                >Cancel</span
-              ></button
-            ><button
-              aria-label="Add task"
-              type="button"
-              aria-disabled="true"
-              class=""
-            >
-              <span class="_0051d171 fb8d74bb _1c09cd18 _68aab614"
-                >Add task</span
-              >
-            </button>
-          </div>
-        </div>
-      </form>
-      <button class="closeDialog">Close</button>
     </dialog>
 
-    
     <button class="btn btn-open">Add task</button>
     <button class="btn btn-open">Add project</button>
-
 
     <!-- js files -->
     <script src="js/app.js" defer></script>

@@ -2,9 +2,15 @@
   --clr-primary: rgb(255, 255, 255);
   --clr-secondary: rgb(252, 250, 248);
   --clr-accent: rgb(220, 76, 62);
+  --clr-accent-disabled: rgb(237, 165, 158);
   --clr-accent-dark: rgb(168, 31, 0);
   --clr-accent-light: rgb(255, 239, 229);
   --clr-secondary-dark: rgb(243, 239, 236);
+  --btn-idle-tint: rgb(102, 102, 102);
+  --btn-hover-tint: rgb(26, 26, 26);
+  --btn-idle-tint-light: rgb(245, 245, 245);
+  --btn-text-idle: rgb(32, 32, 32);
+
   --reactist-font-family: system-ui, "Segoe UI", Roboto, "Helvetica Neue",
     sans-serif;
 
@@ -24,8 +30,6 @@
   --fs-600: 1.3rem;
 
   /*  */
-  --btn-idle-tint: rgb(102, 102, 102);
-  --btn-hover-tint: rgb(26, 26, 26);
 }
 
 /* Box sizing rules */
@@ -328,21 +332,30 @@ p,
   .content {
     padding-inline: 2rem !important;
   }
+  dialog[open] {
+    width: 100%;
+    margin-inline-start: 10px;
+    margin-inline-end: 10px;
+  }
 }
 
 /* dialog style */
-dialog {
-  animation: modal-disappear 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+
+.dialog-wrapper {
+  animation: modal-disappear 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) both;
   transform-origin: bottom center;
   border: none;
+  margin-top: 4rem;
 }
 
-dialog[open] {
-  background-color: white;
+.dialog-wrapper[open] {
+  background-color: var(--clr-primary);
   padding: 20px;
   border: none;
+  /* top: -40%; */
+  max-width: 550px;
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.35);
   opacity: 0; /* Initially hidden */
   animation: modal-appear 0.1s cubic-bezier(0.165, 0.84, 0.44, 1) both;
   transform-origin: bottom center;
@@ -370,7 +383,23 @@ dialog[open] {
   }
   to {
     opacity: 0;
-    transform: scale(0.6);
+    transform: scale(0);
     display: none;
   }
+}
+
+/* animate adding todo item */
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0.4);
+  }
+}
+
+.animate {
+  animation: slideIn 0.5s ease;
 }
