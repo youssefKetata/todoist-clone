@@ -1,26 +1,39 @@
+:root {
+  --padding-inline-dialog: 1rem;
+}
+
 input {
   all: unset;
 }
 
+.task_editor--editing-area {
+  padding-inline: var(--padding-inline-dialog);
+  padding-top: var(--padding-inline-dialog);
+}
+
 .task_editor--input-fields {
+  color: var(--btn-text-idle);
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 4px;
+  margin-bottom: 10px;
 }
 
 .task_editor--input--title {
-  font-size: 1.5rem;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .task_editor--input--description {
-  font-size: 1rem;
+  font-size: 13px;
   font-weight: 400;
 }
 
 .task_editor--chose-field {
   display: flex;
   flex-wrap: wrap;
+  padding-inline: var(--padding-inline-dialog);
+  padding-bottom: var(--padding-inline-dialog);
   gap: 0.5rem;
 }
 
@@ -42,11 +55,14 @@ input {
 }
 
 .task_editor__footer__action-buttons button {
-  padding: 0.5rem 1rem;
+  padding-inline: 12px;
   border-radius: 5px;
-
+  min-width: 68px;
+  height: 32px;
   background-color: var(--btn-idle-tint-light);
   color: var(--btn-text-idle);
+  font-weight: var(--fw-600);
+  font-size: var(--fs-300);
 }
 
 .task_editor__footer__action-buttons button:hover {
@@ -57,4 +73,34 @@ input {
   background-color: var(--clr-accent-disabled);
   color: var(--clr-primary);
   cursor: not-allowed;
+}
+
+.task_editor__footer__action-buttons .closeDialog:hover {
+  background-color: var(--btn-hover-fill);
+}
+
+select {
+  min-width: 5rem;
+  height: 28px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  display: flex;
+  gap: 20px;
+  -webkit-appearance: none; /* Safari and Chrome */
+  appearance: none; /* Standard syntax */
+}
+
+select:focus,
+select:hover {
+  background-color: var(--btn-idle-tint-light);
+  border-radius: 5px;
+}
+
+select:focus-visible {
+  outline: none;
+}
+
+.task_editor--footer {
+  border-top: silver 1px solid;
+  padding: var(--padding-inline-dialog);
 }

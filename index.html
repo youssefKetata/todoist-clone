@@ -298,34 +298,35 @@
       <div class="resize-handle"></div>
       <!-- main content -->
       <section aria-label="Main content" id="content" class="main_content">
+        <!-- <h1 class="main_content-title">main content</h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </p> -->
         <!-- projects list -->
         <div id="project-list"></div>
-        <h1 class="main_content-title">main content</h1>
-        <button class="btn btn-open-dialog" id="btn-open-dialog">
+
+        <button class="btn btn-open-dialog" id="btn-open-dialog--non-modal">
           Add task
         </button>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
       </section>
     </div>
 
-    <dialog id="dialog-wrapper" class="dialog-wrapper">
+    <dialog id="dialog-wrapper" class="dialog-wrapper" methode="dialog">
       <form class="task_editor" id="newTodo-form">
         <div class="task_editor--editing-area">
           <div class="task_editor--input-fields">
@@ -384,20 +385,16 @@
             aria-haspopup="listbox"
             type="button"
             aria-disabled="false"
-            class=""
+            class="select-project"
             id="todo-project"
           >
-            <option value="Default">Default</option>
-            <option value="Work">Work</option>
-            <option value="School">School</option>
-            <option value="Personal">Personal</option>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
               fill="none"
               viewBox="0 0 16 16"
-              class="AyswQEh"
+              class=""
             >
               <path
                 fill="currentColor"
@@ -406,8 +403,7 @@
                 clip-rule="evenodd"
               ></path>
             </svg>
-            <span class="tNSJrRU">Inbox</span>
-            <svg
+            <!-- <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
@@ -419,7 +415,7 @@
                 fill="currentColor"
                 d="M7.646 9.646 4.854 6.854A.5.5 0 0 1 5.207 6h5.586a.5.5 0 0 1 .353.854L8.354 9.646a.5.5 0 0 1-.708 0Z"
               ></path>
-            </svg>
+            </svg> -->
           </select>
           <div class="task_editor__footer__action-buttons">
             <button
@@ -444,9 +440,6 @@
         </div>
       </form>
     </dialog>
-
-    <button class="btn btn-open">Add task</button>
-    <button class="btn btn-open">Add project</button>
 
     <!-- js files -->
     <script src="js/app.js" defer></script>

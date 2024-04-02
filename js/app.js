@@ -7,6 +7,7 @@ openDialogButton.addEventListener("click", () => {
 });
 closeDialog.addEventListener("click", () => {
   myDialog.close();
+  console.log("close");
 });
 myDialog.addEventListener("click", (event) => {
   if (event.target === myDialog) {
@@ -21,6 +22,10 @@ let projects = [];
 // funtion that format date object to string
 const formatDate = (date) => date.toISOString().split("T")[0];
 
+const updateProjectsList = () => {
+  localStorage.setItem("projects", JSON.stringify(projects));
+};
+
 const createProject = (title, color) => {
   let todos = [];
   const addTodo = (todo) => {
@@ -32,13 +37,9 @@ const createProject = (title, color) => {
   const getTodos = () => {
     return todos;
   };
-  projects.push({ title, addTodo, removeTodo, getTodos });
-  return { title, color, addTodo, removeTodo, getTodos };
-};
-
-// add project to the projects list
-const addProject = (project) => {
-  projects.push(project);
+  projects.push({ title, color, todos, addTodo, removeTodo, getTodos });
+  updateProjectsList();
+  return { title, color, todos, addTodo, removeTodo, getTodos };
 };
 
 // factory function to create todo objects
@@ -56,31 +57,38 @@ const createTodo = (
 const projectsList = JSON.parse(localStorage.getItem("projects"));
 if (!projectsList) {
   const defaultProject = createProject("Default", "grey");
+  let date = formatDate(new Date());
   let defaultTodo = createTodo(
     "Default Todo",
     "This is the default todo",
-    new Date(),
-    "Low"
+    date,
+    priorities[0]
   );
   defaultProject.addTodo(defaultTodo);
-  localStorage.setItem("projects", JSON.stringify([defaultProject]));
+  localStorage.setItem("projects", JSON.stringify(projects));
   projects = [defaultProject];
 } else {
   projects = projectsList;
-  console.log(projects[0]);
 }
 
-// edit projectsList whener a new project is created or deleted
-const updateProjectsList = () => {
-  localStorage.setItem("projects", JSON.stringify(projects));
+// create another project
+if (projects.length === 1) {
+  const project2 = createProject("Work", "green");
+}
+
+renderProjects();
+
+const todoTitle = document.querySelector("#todo-title");
+const enableAddTaskButton = () => {
+  // const todoTitle = document.querySelector("#todo-title");
+  console.log(todoTitle);
+  todoTitle.addEventListener("input", () => {
+    const addTaskButton = document.querySelector("#add-task");
+    addTaskButton.disabled = todoTitle.value ? false : true;
+  });
 };
 
-// enable the add task button if the user has entered a title
-const todoTitle = document.querySelector("#todo-title");
-todoTitle.addEventListener("input", () => {
-  const addTaskButton = document.querySelector("#add-task");
-  addTaskButton.disabled = todoTitle.value ? false : true;
-});
+enableAddTaskButton();
 
 // listen for form submission
 const todoForm = document.querySelector("#newTodo-form");
@@ -93,12 +101,11 @@ todoForm.addEventListener("submit", (e) => {
   const project = document.querySelector("#todo-project").value;
   // identify the project that the todo belongs to
   const projectObject = projects.find((p) => p.title === project);
-  console.log(projects);
   const newTodo = createTodo(title, description, dueDate, priority);
+  console.log(projectObject);
   projectObject.addTodo(newTodo);
-  addProject(projectObject);
+  // addProject(projectObject);
   updateProjectsList();
-  // console.log(projectObject.getTodos());
 
   todoForm.reset();
   myDialog.close();
@@ -114,14 +121,24 @@ function renderProjects() {
     projectList.appendChild(projectItem);
     // render all the todos in this project
     const todoList = document.createElement("ul");
-    const todos = project.getTodos();
+
+    const todos = project.todos;
+
     todos.forEach((todo, index) => {
       const todoItem = document.createElement("li");
       const todoDescription = document.createElement("p");
+      const dueDate = document.createElement("p");
+      const priority = document.createElement("p");
+
       todoItem.textContent = todo.title;
       todoDescription.textContent = todo.description;
       todoItem.appendChild(todoDescription);
+      dueDate.textContent = todo.dueDate;
+      todoItem.appendChild(dueDate);
+      priority.textContent = todo.priority;
+      todoItem.appendChild(priority);
       // If this is the last todo, add the animate class
+
       if (index === todos.length - 1) {
         todoItem.classList.add("animate");
       }
@@ -130,11 +147,30 @@ function renderProjects() {
     projectList.appendChild(todoList);
   });
 }
+const openDialog = document.querySelector("#btn-open-dialog--non-modal");
 
-const openDialog = document.querySelector("#btn-open-dialog");
 // open the dialog in
 openDialog.addEventListener("click", () => {
-  console.log("open dialog");
-  // toogle open attribute
-  myDialog.setAttribute("open", "");
+  // Check if a dialog already exists
+  if (!document.querySelector("yDialogClone")) {
+    const dialogclone = myDialog.cloneNode(true);
+    dialogclone.classList.add("DialogClone");
+    const closeBtn = dialogclone.querySelector(".closeDialog");
+    closeBtn.addEventListener("click", () => {
+      dialogclone.close();
+    });
+    console.log("here");
+    enableAddTaskButton();
+    openDialog.parentElement.appendChild(dialogclone);
+    dialogclone.show();
+    dialogclone.classList.add("non-modal-position");
+  }
+});
+
+//update the project list in html
+const selectProject = document.querySelector("#todo-project");
+projects.forEach((project) => {
+  const option = document.createElement("option");
+  option.textContent = project.title;
+  selectProject.appendChild(option);
 });

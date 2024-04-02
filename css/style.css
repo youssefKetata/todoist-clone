@@ -10,6 +10,7 @@
   --btn-hover-tint: rgb(26, 26, 26);
   --btn-idle-tint-light: rgb(245, 245, 245);
   --btn-text-idle: rgb(32, 32, 32);
+  --btn-hover-fill: rgb(229, 229, 229);
 
   --reactist-font-family: system-ui, "Segoe UI", Roboto, "Helvetica Neue",
     sans-serif;
@@ -300,8 +301,8 @@ button {
   transition: padding-inline 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-p,
-.main_content-title {
+/* dynamic padding on main content */
+.main_content > * {
   padding-inline: 1rem;
   margin: 0 auto;
   width: 100%;
@@ -329,7 +330,7 @@ p,
   .collapse_icon {
     margin-right: -60px;
   }
-  .content {
+  .main_content {
     padding-inline: 2rem !important;
   }
   dialog[open] {
@@ -342,30 +343,41 @@ p,
 /* dialog style */
 
 .dialog-wrapper {
-  animation: modal-disappear 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation: modal-disappear 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) both;
   transform-origin: bottom center;
   border: none;
   margin-top: 4rem;
+  max-width: 550px;
+  width: 100%;
 }
 
 .dialog-wrapper[open] {
   background-color: var(--clr-primary);
-  padding: 20px;
+  padding: 0rem;
   border: none;
-  /* top: -40%; */
   max-width: 550px;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.35);
   opacity: 0; /* Initially hidden */
-  animation: modal-appear 0.1s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  animation: modal-appear 0.1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
   transform-origin: bottom center;
+}
+
+.dialog-wrapper[open]::backdrop {
+  background: none;
+}
+
+.non-modal-position {
+  position: relative;
+  top: 0;
+  box-shadow: none !important;
 }
 
 /* Animation styles */
 @keyframes modal-appear {
   from {
     opacity: 0;
-    transform: scale(0.6);
+    transform: scale(0.6) translateY(20px);
     display: none;
   }
   to {
@@ -383,7 +395,7 @@ p,
   }
   to {
     opacity: 0;
-    transform: scale(0);
+    transform: scale(0.6) translateY(20px);
     display: none;
   }
 }
