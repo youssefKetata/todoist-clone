@@ -306,6 +306,8 @@ button {
   padding-inline: 1rem;
   margin: 0 auto;
   width: 100%;
+  max-width: 800px;
+  outline: red 1px solid;
 }
 
 .resize-handle {
