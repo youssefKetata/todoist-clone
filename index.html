@@ -318,6 +318,160 @@
           culpa qui officia deserunt mollit anim id est laborum.
         </p> -->
         <!-- projects list -->
+        <style>
+          .task_list_item {
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid rgb(238 238 238);
+          }
+
+          .task_list_item__content {
+            display: flex;
+            flex-direction: column;
+            padding-block: 8px;
+          }
+
+          .task-checkbox {
+            background-color: rgba(36, 111, 224, 0.1);
+            border-radius: 100%;
+            border: none;
+            cursor: pointer;
+            height: 18px;
+            position: relative;
+            width: 18px;
+            margin-top: 10px;
+          }
+
+          .task-checkbox:hover {
+            background-color: var(--blue-dark);
+            transition: opacity 150ms cubic-bezier(0.4, 0, 1, 1);
+          }
+          .task-checkbox > svg {
+            opacity: 0;
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--default); /* color of the tick icon */
+            transition: opacity 150ms cubic-bezier(0.4, 0, 1, 1);
+          }
+
+          .task-checkbox:hover > svg {
+            opacity: 1;
+          }
+          :root {
+            --blue: rgb(36, 111, 224);
+            -blue-dark: rgba(36, 111, 224, 0.2);
+            --yelow: rgb(235, 137, 9);
+            --red: rgb(209 69 59);
+            --default: rgb(153 153 153);
+          }
+
+          .task-checkbox-circle {
+            border: 2px solid var(--default);
+            border-radius: 50%;
+            height: 18px;
+            aspect-ratio: 1;
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+          }
+          ul,
+          li {
+            all: unset;
+          }
+
+          .task-title {
+            font-size: 14px;
+            line-height: 21px;
+            font-weight: 400;
+            word-break: break-word;
+          }
+
+          .task-description {
+            font-size: 12px;
+            line-height: 18px;
+            font-weight: 400;
+            color: var(--btn-idle-tint);
+          }
+
+          .task_list_item__info_tags {
+            margin-top: 3px;
+          }
+          .due_date_controls {
+            padding: 0;
+            color: var(--btn-idle-tint);
+            font-size: 12px;
+          }
+        </style>
+        <div class="project-list">
+          <ul class="pojects-ul" id="pojects-ul">
+            <li class="">
+              <div class="task_list_item">
+                <!-- <div><svg></svg></div> -->
+                <button
+                  type="button"
+                  role="checkbox"
+                  aria-checked="false"
+                  aria-label="mark task as completed"
+                  class="task-checkbox"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="tb7nk6f"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M16.5056 9.00958C16.2128 8.71668 15.7379 8.71668 15.445 9.00958L10.6715 13.7831L8.72649 11.8381C8.43359 11.5452 7.95872 11.5452 7.66583 11.8381C7.37294 12.1309 7.37293 12.6058 7.66583 12.8987L10.1407 15.3736C10.297 15.5299 10.5051 15.6028 10.7097 15.5923C10.8889 15.5833 11.0655 15.5104 11.2023 15.3735L16.5056 10.0702C16.7985 9.77735 16.7985 9.30247 16.5056 9.00958Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                  <span class="task-checkbox-circle"></span>
+                </button>
+                <div class="task_list_item__content">
+                  <div class="task-title">name</div>
+                  <div class="task-description">description</div>
+                  <!--  -->
+                  <div class="task_list_item__info_tags" data-layout="list">
+                    <button
+                      type="button"
+                      aria-expanded="false"
+                      class="due_date_controls"
+                    >
+                      <span class="date date_future">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="12"
+                          height="12"
+                          fill="none"
+                          viewBox="0 0 12 12"
+                          class="calendar_icon"
+                        >
+                          <path
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                            d="M9.5 1h-7A1.5 1.5 0 0 0 1 2.5v7A1.5 1.5 0 0 0 2.5 11h7A1.5 1.5 0 0 0 11 9.5v-7A1.5 1.5 0 0 0 9.5 1ZM2 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-7ZM8.75 8a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM3.5 4a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5Z"
+                            clip-rule="evenodd"
+                          ></path>
+                        </svg>
+                        Apr 11
+                      </span>
+                    </button>
+                  </div>
+                  <!--  -->
+                  <div></div>
+                </div>
+              </div>
+              <div></div>
+            </li>
+          </ul>
+        </div>
         <div id="project-list"></div>
 
         <button class="btn btn-open-dialog" id="btn-open-dialog--non-modal">
