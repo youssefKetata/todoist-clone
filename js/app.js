@@ -1,23 +1,40 @@
-// dialog box
 const openDialogButton = document.querySelector("#openDialog");
 const myDialog = document.querySelector("#dialog-wrapper");
 const closeDialog = document.querySelector(".closeDialog");
+const openDialog = document.querySelector("#btn-open-dialog--non-modal");
+const priorities = ["low", "medium", "high", "default"];
+const todoTitle = document.querySelector("#todo-title");
+const projectsList = JSON.parse(localStorage.getItem("projects"));
+const projects_ul = document.querySelector("#pojects-ul");
+const projectSelect = document.querySelector("#todo-project");
+let projects = [];
+console.log(projectsList);
+
+// funtion too add all the projects to the select input
+const addProject = (project) => {
+  const option = document.createElement("option");
+  option.value = project.title;
+  option.textContent = project.title;
+  projectSelect.appendChild(option);
+};
+
 openDialogButton.addEventListener("click", () => {
-  myDialog.showModal();
+  if (!myDialog.open) {
+    myDialog.showModal();
+  }
 });
+
 closeDialog.addEventListener("click", () => {
-  myDialog.close();
-  console.log("close");
+  if (myDialog.open) {
+    myDialog.close();
+  }
 });
+
 myDialog.addEventListener("click", (event) => {
   if (event.target === myDialog) {
     myDialog.close();
   }
 });
-
-// todo form
-const priorities = ["low", "medium", "high", "default"];
-let projects = [];
 
 // funtion that format date object to string
 const formatDate = (date) => date.toISOString().split("T")[0];
@@ -48,46 +65,64 @@ const createTodo = (
   title,
   description,
   dueDate = date,
-  priority = priorities[1]
+  priority = priorities[1],
+  checked = false
 ) => {
-  return { title, description, dueDate, priority };
+  return { title, description, dueDate, priority, checked };
 };
 
 //create dafault project if it doesn't exist in the local storage
-const projectsList = JSON.parse(localStorage.getItem("projects"));
 if (!projectsList) {
-  const defaultProject = createProject("Default", "grey");
+  const defaultProject = createProject("default", "grey");
   let date = formatDate(new Date());
   let defaultTodo = createTodo(
     "Default Todo",
     "This is the default todo",
     date,
-    priorities[0]
+    priorities[3]
   );
   defaultProject.addTodo(defaultTodo);
-  localStorage.setItem("projects", JSON.stringify(projects));
   projects = [defaultProject];
+  localStorage.setItem("projects", JSON.stringify(projects));
 } else {
   projects = projectsList;
 }
 
-// create another project
-if (projects.length === 1) {
-  const project2 = createProject("Work", "green");
-}
-
+// render existed projects in the local storage
 renderProjects();
 
-const todoTitle = document.querySelector("#todo-title");
 const enableAddTaskButton = () => {
-  // const todoTitle = document.querySelector("#todo-title");
   todoTitle.addEventListener("input", () => {
     const addTaskButton = document.querySelector("#add-task");
     addTaskButton.disabled = todoTitle.value ? false : true;
   });
 };
-
 enableAddTaskButton();
+
+function addProjectOption(project) {
+  const option = document.createElement("option");
+  option.value = project.title;
+  option.textContent = project.title;
+  projectSelect.appendChild(option);
+}
+// add all the projects names as options in the select input
+projects.forEach((project) => {
+  addProjectOption(project);
+});
+
+// do the sam for priorities
+const prioritySelect = document.querySelector("#todo-priority");
+priorities.forEach((priority) => {
+  const option = document.createElement("option");
+  option.value = priority;
+  option.textContent = priority;
+  prioritySelect.appendChild(option);
+});
+
+//user can't select a date earlier then today
+const today = new Date();
+const todayFormatted = today.toISOString().split("T")[0];
+document.getElementById("todo-dueDate").min = todayFormatted;
 
 // listen for form submission
 const todoForm = document.querySelector("#newTodo-form");
@@ -99,14 +134,10 @@ todoForm.addEventListener("submit", (e) => {
   const priority = document.querySelector("#todo-priority").value;
   const project = document.querySelector("#todo-project").value;
   // identify the project that the todo belongs to
-  console.log("projects[0].title:", projects[0].title);
-  console.log("project:", project);
-  console.log(projects[0].title == project);
+
   const projectObject = projects.find((p) => p.title == project);
   const newTodo = createTodo(title, description, dueDate, priority);
-  console.log(projectObject);
-  projectObject.addTodo(newTodo);
-  // addProject(projectObject);
+  projectObject.todos.push(newTodo);
   updateProjectsList();
 
   todoForm.reset();
@@ -115,43 +146,23 @@ todoForm.addEventListener("submit", (e) => {
 });
 
 function renderProjects() {
-  const projectList = document.querySelector("#project-list");
+  const projectList = document.getElementById("pojects-ul");
+  console.log(projectList);
   projectList.innerHTML = "";
   projects.forEach((project) => {
-    const projectItem = document.createElement("ul");
-    projectItem.textContent = project.title;
-    projectList.appendChild(projectItem);
-    // render all the todos in this project
-    const todoList = document.createElement("ul");
-
-    const todos = project.todos;
-
-    todos.forEach((todo, index) => {
-      const todoItem = document.createElement("li");
-      const todoDescription = document.createElement("p");
-      const dueDate = document.createElement("p");
-      const priority = document.createElement("p");
-
-      todoItem.textContent = todo.title;
-      todoDescription.textContent = todo.description;
-      todoItem.appendChild(todoDescription);
-      dueDate.textContent = todo.dueDate;
-      todoItem.appendChild(dueDate);
-      priority.textContent = todo.priority;
-      todoItem.appendChild(priority);
-      // If this is the last todo, add the animate class
-
-      if (index === todos.length - 1) {
-        todoItem.classList.add("animate");
-      }
-      todoList.appendChild(todoItem);
+    project.todos.forEach((todo, index) => {
+      const task = appendTask(
+        todo.title,
+        todo.description,
+        todo.dueDate,
+        todo.priority
+      );
+      projects_ul.appendChild(task);
     });
-    projectList.appendChild(todoList);
   });
 }
-const openDialog = document.querySelector("#btn-open-dialog--non-modal");
 
-// open the dialog in
+// open the dialog as non modal
 openDialog.addEventListener("click", () => {
   // Check if a dialog already exists
   if (!document.querySelector("yDialogClone")) {
@@ -161,15 +172,15 @@ openDialog.addEventListener("click", () => {
     closeBtn.addEventListener("click", () => {
       dialogclone.close();
     });
-    console.log("here");
     enableAddTaskButton();
     openDialog.parentElement.appendChild(dialogclone);
     dialogclone.show();
     dialogclone.classList.add("non-modal-position");
   }
 });
+
 // Define a factory function for creating tasks
-function createTask(name, description, dueDate, priority) {
+function appendTask(name, description, dueDate, priority) {
   var li = document.createElement("li");
   li.className = "";
 
@@ -264,25 +275,12 @@ function createTask(name, description, dueDate, priority) {
 function getColorForPriority(priority) {
   switch (priority) {
     case priorities[0]:
-      return "rgb(209, 69, 59)"; // Red
+      return "rgb(235, 137, 9)"; // Red
     case priorities[1]:
       return "rgb(36, 111, 224)"; // Blue
     case priorities[2]:
-      return "rgb(235, 137, 9)"; // Yellow
+      return "rgb(209, 69, 59)"; // Yellow
     default:
       return "rgb(153 153 153)"; // grey
   }
 }
-
-// Example usage:
-var task1 = createTask("Task 1", "Description 1", "Apr 11", "high"); // High priority task
-var task2 = createTask("Task 2", "Description 2", "Apr 12", "medium"); // Medium priority task
-var task3 = createTask("Task 3", "Description 3", "Apr 13", "low"); // Low priority task
-var task4 = createTask("Task 3", "Description 4", "Apr 14", "default"); // Low priority task
-
-// Append the tasks wherever you want in your HTML document
-const projects_ul = document.querySelector("#pojects-ul");
-projects_ul.appendChild(task1);
-projects_ul.appendChild(task2);
-projects_ul.appendChild(task3);
-projects_ul.appendChild(task4);
