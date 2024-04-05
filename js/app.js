@@ -8,7 +8,6 @@ const projectsList = JSON.parse(localStorage.getItem("projects"));
 const projects_ul = document.querySelector("#pojects-ul");
 const projectSelect = document.querySelector("#todo-project");
 let projects = [];
-console.log(projectsList);
 
 // funtion too add all the projects to the select input
 const addProject = (project) => {
@@ -147,7 +146,6 @@ todoForm.addEventListener("submit", (e) => {
 
 function renderProjects() {
   const projectList = document.getElementById("pojects-ul");
-  console.log(projectList);
   projectList.innerHTML = "";
   projects.forEach((project) => {
     project.todos.forEach((todo, index) => {
@@ -201,7 +199,7 @@ function appendTask(name, description, dueDate, priority) {
   svg.setAttribute("viewBox", "0 0 24 24");
   svg.setAttribute("fill", "none");
   svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-  svg.className = "tb7nk6f";
+  svg.className = "";
 
   // Create the <path> element with appropriate attributes
   var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -266,7 +264,10 @@ function appendTask(name, description, dueDate, priority) {
   li.appendChild(divTaskListItem);
 
   var divEmpty = document.createElement("div");
+
   li.appendChild(divEmpty);
+  const taskActions = createTaskActionsElement();
+  divTaskListItemContent.appendChild(taskActions);
 
   return li;
 }
@@ -283,4 +284,86 @@ function getColorForPriority(priority) {
     default:
       return "rgb(153 153 153)"; // grey
   }
+}
+
+function createTaskActionsElement() {
+  const element = document.createElement("div");
+  element.classList.add("task_list_item__actions");
+
+  // Edit button
+  const editButton = document.createElement("button");
+  editButton.type = "button";
+  editButton.ariaLabel = "Edit";
+  editButton.dataset.actionHint = "task-edit";
+  editButton.innerHTML = createEditButtonSvg();
+
+  // Due date button
+  const dueDateButton = document.createElement("button");
+  dueDateButton.type = "button";
+  dueDateButton.ariaExpanded = "false";
+  dueDateButton.dataset.actionHint = "task-scheduler";
+  dueDateButton.ariaLabel = "Due date";
+  dueDateButton.classList.add("due_date_controls");
+  dueDateButton.innerHTML = createDueDateButtonSvg();
+
+  // Comment button
+  const commentButton = document.createElement("button");
+  commentButton.type = "button";
+  commentButton.ariaLabel = "Comment";
+  commentButton.dataset.actionHint = "task-comment";
+  commentButton.classList.add("task_list_item__comments_link");
+  commentButton.innerHTML = createCommentButtonSvg();
+
+  // More actions button
+  const moreButton = document.createElement("button");
+  moreButton.type = "button";
+  moreButton.ariaExpanded = "false";
+  moreButton.ariaHaspopup = "menu";
+  moreButton.dataset.actionHint = "task-overflow-menu";
+  moreButton.ariaLabel = "More task actions";
+  // moreButton.classList.add(" "); //
+  moreButton.innerHTML = createMoreButtonSvg();
+
+  // Append buttons to the element
+  element.appendChild(editButton);
+  element.appendChild(dueDateButton);
+  element.appendChild(commentButton);
+  element.appendChild(moreButton);
+
+  return element;
+}
+
+// Helper functions to create SVG strings
+function createEditButtonSvg() {
+  return `<svg width="24" height="24">
+              <g fill="none" fill-rule="evenodd">
+                <path fill="currentColor" d="M9.5 19h10a.5.5 0 1 1 0 1h-10a.5.5 0 1 1 0-1z" />
+                <path stroke="currentColor" d="M4.42 16.03a1.5 1.5 0 0 0-.43.9l-.22 2.02a.5.5 0 0 0 .55.55l2.02-.21a1.5 1.5 0 0 0 .9-.44L18.7 7.4a1.5 1.5 0 0 0 0-2.12l-.7-.7a1.5 1.5 0 0 0-2.13 0L4.42 16.02z" />
+              </g>
+            </svg>`;
+}
+
+function createDueDateButtonSvg() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path fill="currentColor" fill-rule="evenodd" d="M18 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM5 6a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6Zm12 10a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7 8a.5.5 0 0 0 0 1h10a.5.5 0 0 0 0-1H7z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>`;
+}
+
+function createCommentButtonSvg() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" data-svgs-path="sm1/comments.svg">
+            <path fill="currentColor" fill-rule="nonzero" d="M11.707 20.793A1 1 0 0 1 10 20.086V18H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-4.5l-2.793 2.793zM11 20.086L14.086 17H19a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h6v3.086z"
+            ></path>
+          </svg>`;
+}
+
+function createMoreButtonSvg() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" transform="translate(3 10)">
+              <circle cx="2" cy="2" r="2"></circle>
+              <circle cx="9" cy="2" r="2"></circle>
+              <circle cx="16" cy="2" r="2"></circle>
+            </g>
+          </svg>`;
 }

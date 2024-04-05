@@ -14,10 +14,16 @@ li {
   border-bottom: 1px solid rgb(238 238 238);
 }
 
+.task_list_item:hover .task_list_item__actions button {
+  opacity: 1;
+}
+
 .task_list_item__content {
   display: flex;
   flex-direction: column;
   padding-block: 8px;
+  flex: 1;
+  position: relative;
 }
 
 .task-checkbox {
@@ -81,4 +87,37 @@ li {
   padding: 0;
   color: var(--btn-idle-tint);
   font-size: 12px;
+}
+
+/* Task List Item Actions(edit delete..) */
+
+.task_list_item__actions {
+  display: flex;
+  height: 24px;
+  justify-content: flex-end;
+  margin-right: -30px;
+  margin-top: 8px;
+  padding-left: 16px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.task_list_item__actions button {
+  align-items: center;
+  border-radius: 3px;
+  color: rgb(128, 128, 128);
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  height: 24px;
+  justify-content: center;
+  margin-left: 8px;
+  width: 24px;
+  opacity: 0;
+}
+
+.task_list_item__actions button:hover {
+  background-color: rgb(238, 238, 238);
+  color: var(--btn-text-idle);
 }
