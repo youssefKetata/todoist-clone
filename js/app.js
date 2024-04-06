@@ -40,6 +40,7 @@ const formatDate = (date) => date.toISOString().split("T")[0];
 
 const updateProjectsList = () => {
   localStorage.setItem("projects", JSON.stringify(projects));
+  renderProjects();
 };
 
 const createProject = (title, color) => {
@@ -145,17 +146,20 @@ todoForm.addEventListener("submit", (e) => {
 });
 
 function renderProjects() {
-  const projectList = document.getElementById("pojects-ul");
-  projectList.innerHTML = "";
+  // render task which are not checked yet
+
+  projects_ul.innerHTML = "";
   projects.forEach((project) => {
-    project.todos.forEach((todo, index) => {
-      const task = appendTask(
-        todo.title,
-        todo.description,
-        todo.dueDate,
-        todo.priority
-      );
-      projects_ul.appendChild(task);
+    project.todos.forEach((todo) => {
+      if (!todo.checked) {
+        const task = appendTask(
+          todo.title,
+          todo.description,
+          todo.dueDate,
+          todo.priority
+        );
+        projects_ul.appendChild(task);
+      }
     });
   });
 }
@@ -367,3 +371,40 @@ function createMoreButtonSvg() {
             </g>
           </svg>`;
 }
+
+// add event listener to ul tasks and check when the user click the done task button, if clicked add animation to remove ti
+// adn then change the task checked proprity to true;
+
+//
+
+projects_ul.addEventListener("click", (e) => {
+  if (e.target.classList.contains("task-checkbox-circle")) {
+    const task = e.target.closest("li");
+    const btn = e.target.closest("button");
+    //animate the task
+    btn.classList.add("task-done-animation");
+    // set the button color to the task color
+    btn.style.backgroundColor = e.target.style.borderColor;
+
+    const taskTitle = task.querySelector(".task-title").textContent;
+    const project = projects.find((p) =>
+      p.todos.find((t) => t.title == taskTitle)
+    );
+    const todo = project.todos.find((t) => t.title == taskTitle);
+    todo.checked = true;
+    // remove the task from the list after the animation ends
+    // 500 should match the animation duration in css
+    playSound();
+    setTimeout(() => {
+      task.remove();
+    }, 300);
+  }
+});
+
+// https://d3ptyyxy2at9ui.cloudfront.net/assets/sounds/d8040624c9c7c88aa730f73faa60cf39.mp3
+const playSound = () => {
+  const audio = new Audio(
+    "https://d3ptyyxy2at9ui.cloudfront.net/assets/sounds/d8040624c9c7c88aa730f73faa60cf39.mp3"
+  );
+  audio.play();
+};
