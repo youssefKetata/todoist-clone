@@ -123,11 +123,10 @@ li {
 }
 
 /* task checked animation */
-.task-done-animation,
-.task-done-animation:hover {
-  animation: taskChecked 0.3s cubic-bezier(0.4, 0, 1, 1);
+.task-done-animation {
+  animation: taskChecked 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
   transform: background-color 0.3s cubic-bezier(0.4, 0, 1, 1);
-  /* background-color: currentColor; */
+  /* background-color: currentColor !important; */
 }
 
 @keyframes taskChecked {
