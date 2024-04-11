@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/form.css" />
     <link rel="stylesheet" href="css/task-item.css" />
+    <link rel="stylesheet" href="css/project-dialog.css" />
     <title>To do app</title>
   </head>
   <body>
@@ -232,6 +233,7 @@
                   aria-label="Add project"
                   type="button"
                   class="add_project"
+                  id="add_project"
                 >
                   <svg
                     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -492,14 +494,6 @@
       </section>
     </div>
     <div id="project-dialog-wrapper"></div>
-    <script>
-      fetch("./project-dialog.html")
-        .then((response) => response.text())
-        .then(
-          (data) =>
-            (document.querySelector("#project-dialog-wrapper").innerHTML = data)
-        );
-    </script>
 
     <dialog id="dialog-wrapper" class="dialog-wrapper" methode="dialog">
       <form class="task_editor" id="newTodo-form">
@@ -615,8 +609,5 @@
     <!-- js files -->
     <script type="module" src="js/app.js" defer></script>
     <script src="js/dynamic-sidebar.js" defer></script>
-    <script src="js/test.js" defer></script>
-    
-    </script>
   </body>
 </html>

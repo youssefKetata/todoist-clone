@@ -253,4 +253,20 @@ const deleteTask = (name) => {
   }
 };
 
+// listen when the user want to add a project
+// fetch the project-dialog.html and append it to the body
+// excute the code that is in the project-dialog.js file
+const addProjectButton = document.querySelector("#add_project");
+addProjectButton.addEventListener("click", () => {
+  fetch("project-dialog.html")
+    .then((response) => response.text())
+    .then((data) => {
+      document.querySelector("#project-dialog-wrapper").innerHTML = data;
+      const script = document.createElement("script");
+      script.defer = true; // Remove the value
+      script.src = "js/project-dialog.js";
+      document.body.appendChild(script);
+    });
+});
+
 export { deleteTask };
