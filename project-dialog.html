@@ -1,11 +1,12 @@
 <style>
   .project-dialog-wrapper {
     padding: 16px;
+    max-width: 450px !important;
   }
   #dropdown-select-51-listbox {
     display: flex;
     flex-direction: column;
-    max-width: 300px;
+    max-width: calc(100% - 12px);
     font-size: 13px;
     border-collapse: collapse;
     list-style: none;
@@ -13,6 +14,7 @@
     max-height: 300px;
     overflow-x: hidden;
     overflow-y: auto;
+    cursor: pointer;
   }
   :root {
     --named-color-berry-red: #b8255f;
@@ -37,11 +39,10 @@
     --named-color-taupe: #8f7a69;
   }
 
-  .color_dropdown_select .color_dropdown_select__color {
+  .color_dropdown_select__color {
     border-radius: 6px;
     display: inline-block;
     height: 12px;
-    /* margin: 8px 6px; */
     width: 12px;
   }
   #dropdown-select-51-listbox > li {
@@ -74,17 +75,92 @@
     margin-bottom: 8px;
   }
 
-  input[type="text"] {
+  .projct-name-input {
+    max-width: 100%;
     width: 100%;
-    padding: 8px;
+    align-self: center;
     border: 1px solid #e0e0e0;
     border-radius: 4px;
     margin-bottom: 16px;
+    padding: 5px;
+  }
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    padding-inline: 20px;
+    font-size: 14px;
+    position: relative;
+  }
+
+  .closeDialog {
+    margin-left: auto;
+  }
+
+  .closeDialog,
+  .add-project {
+    justify-content: center;
+  }
+
+  .project_editor__footer {
+    padding: 16px;
+    display: flex;
+    gap: 8px;
   }
 
   html * {
-    scrollbar-color: var(--scrollbar-thumb-idle) var(--scrollbar-thumb-track);
     scrollbar-width: thin;
+  }
+
+  .project_editor__footer .add-project {
+    background-color: var(--clr-accent);
+    color: var(--clr-primary);
+  }
+
+  .project_editor__footer button {
+    padding-inline: 12px;
+    border-radius: 5px;
+    min-width: 68px;
+    height: 32px;
+    background-color: var(--btn-idle-tint-light);
+    color: var(--btn-text-idle);
+    font-weight: var(--fw-600);
+    font-size: var(--fs-300);
+  }
+
+  .project_editor__footer button:hover {
+    background-color: var(--clr-accent-dark);
+  }
+
+  .project_editor__footer button:disabled {
+    background-color: var(--clr-accent-disabled);
+    color: var(--clr-primary);
+    cursor: not-allowed;
+  }
+
+  .project_editor__footer .closeDialog:hover {
+    background-color: var(--btn-hover-fill);
+  }
+
+  .project-color-input {
+    margin-bottom: 8px;
+  }
+  .color_dropdown_toggle {
+    border: 1px solid rgb(230, 230, 230);
+    padding-block: 5px;
+    padding-inline: 15px;
+    border-radius: 4px;
+  }
+  .color_dropdown_chevron {
+    margin-left: auto;
+  }
+  .dropdown_select--popup {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  li[role="option"].dropdown_select__option--highlighted {
+    background-color: #f3f3f3;
   }
 </style>
 
@@ -92,14 +168,17 @@
   <header class="project-dialog-header">
     <h2>Add project</h2>
   </header>
-  <div></div>
-  <label for="project-name">Name</label>
-  <input type="text" id="project-name" />
+
+  <div class="form-field">
+    <label for="project-name">Name</label>
+    <input type="text" id="project-name" class="projct-name-input" />
+  </div>
+
   <!-- <label for="project-color">Color</label>
   <input type="color" id="project-color" /> -->
-  <!--  -->
-  <div class="form_field">
-    <div class="fb8d74bb db26b033 _8c75067a">
+
+  <div class="form-field">
+    <div class="project-color-input">
       <label id="edit_project_modal_field_color_label">Color</label>
     </div>
     <button
@@ -109,16 +188,15 @@
       aria-controls="dropdown-select-51-popup"
       aria-expanded="false"
       aria-haspopup="listbox"
-      class="color_dropdown_toggle fb8d74bb _14423c92 _1f362dec ad0ccf15 _5f8879d9 _45a8f27f b76144ce _8c75067a _958da546"
+      class="color_dropdown_toggle"
+      id="dropdown-select-51"
     >
-      <div
-        class="fb8d74bb _14423c92 _4e9ab24b ad0ccf15 _9510d053 d70b3c17 _5f8879d9 b76144ce c3b69d70 _2580a74b"
-      >
+      <div id="selected_color_data">
         <span
           class="color_dropdown_select__color"
           style="background-color: var(--named-color-grape)"
-        ></span
-        ><span id="element" class="color_dropdown_select__name">Grape</span>
+        ></span>
+        <span id="element" class="color_dropdown_select__name">Grape</span>
       </div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -136,406 +214,395 @@
         ></path>
       </svg>
     </button>
+    <!-- test  -->
+    <div
+      class="popper"
+      style="
+        position: absolute;
+        inset: 0px auto auto 0px;
+        transform: translate(30px, 68px);
+        width: 100%;
+      "
+      data-placement="bottom"
+    >
+      <div
+        id="dropdown-select-51-popup"
+        tabindex="-1"
+        class="dropdown_select--popup color_dropdown_select"
+        style="width: 410px"
+      >
+        <ul
+          role="listbox"
+          aria-multiselectable="false"
+          id="dropdown-select-51-listbox"
+          aria-activedescendant="dropdown-select-51-option-berry-red"
+        >
+          <li
+            class=""
+            id="dropdown-select-51-option-berry-red"
+            role="option"
+            data-value="berry_red"
+            data-select-all="false"
+            aria-label="berry_red"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-berry-red)"
+            ></span
+            ><span class="color_dropdown_select__name">Berry Red</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-red"
+            role="option"
+            data-value="red"
+            data-select-all="false"
+            aria-label="red"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-red)"
+            ></span
+            ><span class="color_dropdown_select__name">Red</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-orange"
+            role="option"
+            data-value="orange"
+            data-select-all="false"
+            aria-label="orange"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-orange)"
+            ></span
+            ><span class="color_dropdown_select__name">Orange</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-yellow"
+            role="option"
+            data-value="yellow"
+            data-select-all="false"
+            aria-label="yellow"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-yellow)"
+            ></span
+            ><span class="color_dropdown_select__name">Yellow</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-olive-green"
+            role="option"
+            data-value="olive_green"
+            data-select-all="false"
+            aria-label="olive_green"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-olive-green)"
+            ></span
+            ><span class="color_dropdown_select__name">Olive Green</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-lime-green"
+            role="option"
+            data-value="lime_green"
+            data-select-all="false"
+            aria-label="lime_green"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-lime-green)"
+            ></span
+            ><span class="color_dropdown_select__name">Lime Green</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-green"
+            role="option"
+            data-value="green"
+            data-select-all="false"
+            aria-label="green"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-green)"
+            ></span
+            ><span class="color_dropdown_select__name">Green</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-mint-green"
+            role="option"
+            data-value="mint_green"
+            data-select-all="false"
+            aria-label="mint_green"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-mint-green)"
+            ></span
+            ><span class="color_dropdown_select__name">Mint Green</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-teal"
+            role="option"
+            data-value="teal"
+            data-select-all="false"
+            aria-label="teal"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-teal)"
+            ></span
+            ><span class="color_dropdown_select__name">Teal</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-sky-blue"
+            role="option"
+            data-value="sky_blue"
+            data-select-all="false"
+            aria-label="sky_blue"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-sky-blue)"
+            ></span
+            ><span class="color_dropdown_select__name">Sky Blue</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-light-blue"
+            role="option"
+            data-value="light_blue"
+            data-select-all="false"
+            aria-label="light_blue"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-light-blue)"
+            ></span
+            ><span class="color_dropdown_select__name">Light Blue</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-blue"
+            role="option"
+            data-value="blue"
+            data-select-all="false"
+            aria-label="blue"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-blue)"
+            ></span
+            ><span class="color_dropdown_select__name">Blue</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-grape"
+            role="option"
+            data-value="grape"
+            data-select-all="false"
+            aria-label="grape"
+            aria-disabled="false"
+            aria-selected="true"
+            aria-checked="true"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-grape)"
+            ></span
+            ><span class="color_dropdown_select__name">Grape</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-violet"
+            role="option"
+            data-value="violet"
+            data-select-all="false"
+            aria-label="violet"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-violet)"
+            ></span
+            ><span class="color_dropdown_select__name">Violet</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-lavender"
+            role="option"
+            data-value="lavender"
+            data-select-all="false"
+            aria-label="lavender"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-lavender)"
+            ></span
+            ><span class="color_dropdown_select__name">Lavender</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-magenta"
+            role="option"
+            data-value="magenta"
+            data-select-all="false"
+            aria-label="magenta"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-magenta)"
+            ></span
+            ><span class="color_dropdown_select__name">Magenta</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-salmon"
+            role="option"
+            data-value="salmon"
+            data-select-all="false"
+            aria-label="salmon"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-salmon)"
+            ></span
+            ><span class="color_dropdown_select__name">Salmon</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-charcoal"
+            role="option"
+            data-value="charcoal"
+            data-select-all="false"
+            aria-label="charcoal"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-charcoal)"
+            ></span
+            ><span class="color_dropdown_select__name">Charcoal</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-grey"
+            role="option"
+            data-value="grey"
+            data-select-all="false"
+            aria-label="grey"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-grey)"
+            ></span
+            ><span class="color_dropdown_select__name">Grey</span>
+          </li>
+          <li
+            class=""
+            id="dropdown-select-51-option-taupe"
+            role="option"
+            data-value="taupe"
+            data-select-all="false"
+            aria-label="taupe"
+            aria-disabled="false"
+            aria-selected="false"
+            aria-checked="false"
+          >
+            <span
+              class="color_dropdown_select__color"
+              style="background-color: var(--named-color-taupe)"
+            ></span
+            ><span class="color_dropdown_select__name">Taupe</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!--  -->
   </div>
 
-  <div
-    class="popper"
-    style="
-      position: absolute;
-      inset: 0px auto auto 0px;
-      transform: translate(168px, 290px);
-    "
-    data-placement="bottom"
-  >
-    <div
-      id="dropdown-select-51-popup"
-      tabindex="-1"
-      class="dropdown_select--popup color_dropdown_select"
-      style="width: 410px"
-    >
-      <ul
-        role="listbox"
-        aria-multiselectable="false"
-        id="dropdown-select-51-listbox"
-        aria-activedescendant="dropdown-select-51-option-berry-red"
+  <div class="">
+    <div class="project_editor__footer">
+      <button
+        aria-label="Cancel"
+        type="button"
+        aria-disabled="false"
+        class="closeDialog"
       >
-        <li
-          class="dropdown_select__option--highlighted"
-          id="dropdown-select-51-option-berry-red"
-          role="option"
-          data-value="berry_red"
-          data-select-all="false"
-          aria-label="berry_red"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-berry-red)"
-          ></span
-          ><span class="color_dropdown_select__name">Berry Red</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-red"
-          role="option"
-          data-value="red"
-          data-select-all="false"
-          aria-label="red"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-red)"
-          ></span
-          ><span class="color_dropdown_select__name">Red</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-orange"
-          role="option"
-          data-value="orange"
-          data-select-all="false"
-          aria-label="orange"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-orange)"
-          ></span
-          ><span class="color_dropdown_select__name">Orange</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-yellow"
-          role="option"
-          data-value="yellow"
-          data-select-all="false"
-          aria-label="yellow"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-yellow)"
-          ></span
-          ><span class="color_dropdown_select__name">Yellow</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-olive-green"
-          role="option"
-          data-value="olive_green"
-          data-select-all="false"
-          aria-label="olive_green"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-olive-green)"
-          ></span
-          ><span class="color_dropdown_select__name">Olive Green</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-lime-green"
-          role="option"
-          data-value="lime_green"
-          data-select-all="false"
-          aria-label="lime_green"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-lime-green)"
-          ></span
-          ><span class="color_dropdown_select__name">Lime Green</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-green"
-          role="option"
-          data-value="green"
-          data-select-all="false"
-          aria-label="green"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-green)"
-          ></span
-          ><span class="color_dropdown_select__name">Green</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-mint-green"
-          role="option"
-          data-value="mint_green"
-          data-select-all="false"
-          aria-label="mint_green"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-mint-green)"
-          ></span
-          ><span class="color_dropdown_select__name">Mint Green</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-teal"
-          role="option"
-          data-value="teal"
-          data-select-all="false"
-          aria-label="teal"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-teal)"
-          ></span
-          ><span class="color_dropdown_select__name">Teal</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-sky-blue"
-          role="option"
-          data-value="sky_blue"
-          data-select-all="false"
-          aria-label="sky_blue"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-sky-blue)"
-          ></span
-          ><span class="color_dropdown_select__name">Sky Blue</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-light-blue"
-          role="option"
-          data-value="light_blue"
-          data-select-all="false"
-          aria-label="light_blue"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-light-blue)"
-          ></span
-          ><span class="color_dropdown_select__name">Light Blue</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-blue"
-          role="option"
-          data-value="blue"
-          data-select-all="false"
-          aria-label="blue"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-blue)"
-          ></span
-          ><span class="color_dropdown_select__name">Blue</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-grape"
-          role="option"
-          data-value="grape"
-          data-select-all="false"
-          aria-label="grape"
-          aria-disabled="false"
-          aria-selected="true"
-          aria-checked="true"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-grape)"
-          ></span
-          ><span class="color_dropdown_select__name">Grape</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-violet"
-          role="option"
-          data-value="violet"
-          data-select-all="false"
-          aria-label="violet"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-violet)"
-          ></span
-          ><span class="color_dropdown_select__name">Violet</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-lavender"
-          role="option"
-          data-value="lavender"
-          data-select-all="false"
-          aria-label="lavender"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-lavender)"
-          ></span
-          ><span class="color_dropdown_select__name">Lavender</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-magenta"
-          role="option"
-          data-value="magenta"
-          data-select-all="false"
-          aria-label="magenta"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-magenta)"
-          ></span
-          ><span class="color_dropdown_select__name">Magenta</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-salmon"
-          role="option"
-          data-value="salmon"
-          data-select-all="false"
-          aria-label="salmon"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-salmon)"
-          ></span
-          ><span class="color_dropdown_select__name">Salmon</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-charcoal"
-          role="option"
-          data-value="charcoal"
-          data-select-all="false"
-          aria-label="charcoal"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-charcoal)"
-          ></span
-          ><span class="color_dropdown_select__name">Charcoal</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-grey"
-          role="option"
-          data-value="grey"
-          data-select-all="false"
-          aria-label="grey"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-grey)"
-          ></span
-          ><span class="color_dropdown_select__name">Grey</span>
-        </li>
-        <li
-          class=""
-          id="dropdown-select-51-option-taupe"
-          role="option"
-          data-value="taupe"
-          data-select-all="false"
-          aria-label="taupe"
-          aria-disabled="false"
-          aria-selected="false"
-          aria-checked="false"
-        >
-          <span
-            class="color_dropdown_select__color"
-            style="background-color: var(--named-color-taupe)"
-          ></span
-          ><span class="color_dropdown_select__name">Taupe</span>
-        </li>
-      </ul>
+        <span class="">Cancel</span></button
+      ><button
+        disabled
+        aria-label="Add project"
+        type="submit"
+        formmethod="dialog"
+        aria-disabled="true"
+        class="add-project"
+        id="add-project"
+      >
+        <span class="">Add</span>
+      </button>
     </div>
   </div>
-  <!--  -->
-
-  <div class="task_editor__footer__action-buttons">
-    <button
-      aria-label="Cancel"
-      type="button"
-      aria-disabled="false"
-      class="closeDialog"
-    >
-      <span class="">Cancel</span></button
-    ><button
-      disabled
-      aria-label="Add task"
-      type="submit"
-      formmethod="dialog"
-      aria-disabled="true"
-      class="add-task"
-      id="add-task"
-    >
-      <span class="">Add</span>
-    </button>
-  </div>
 </dialog>
-<script>
-  const checkmark = `<svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 12 12"
-            width="12"
-            height="12"
-            class="color_dropdown_select__checkmark">
-            <path
-              fill="currentColor"
-              fill-rule="evenodd"
-              d="M4.902 6.975l4.182-4.244a.74.74 0 0 1 1.06 0 .775.775 0 0 1 0 1.081L5.432 8.597a.74.74 0 0 1-1.06 0L1.78 5.975a.775.775 0 0 1 0-1.081.74.74 0 0 1 1.061 0l2.06 2.081z"
-            ></path>
-          </svg>`;
-</script>
