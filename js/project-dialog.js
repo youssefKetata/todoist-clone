@@ -1,7 +1,7 @@
 const ul = document.querySelector("#dropdown-select-51-listbox");
 const btn = document.querySelector("#dropdown-select-51");
 const dialogModal = document.querySelector(".project-dialog-wrapper");
-console.log("success");
+const closeProjectDialog = document.querySelector("#closeDialog");
 dialogModal.showModal();
 
 for (let i = 0; i < ul.children.length; i++) {
@@ -29,7 +29,22 @@ for (let i = 0; i < ul.children.length; i++) {
   });
 }
 
+// enale the add project button only when the project name is not empty
+const projectTitle = document.querySelector("#project-name");
+const enableAddTaskButton = () => {
+  projectTitle.addEventListener("input", () => {
+    const addProjectButton = document.querySelector("#add-project");
+    addProjectButton.disabled = projectTitle.value ? false : true;
+  });
+};
+enableAddTaskButton();
+
 btn.addEventListener("click", (e) => {
-  console.log(ul.style.display);
   ul.style.display = ul.style.display == "block" ? "none" : "block";
+});
+
+closeProjectDialog.addEventListener("click", (e) => {
+  dialogModal.close();
+  const script = document.querySelector("script[src='js/project-dialog.js']");
+  script.remove();
 });

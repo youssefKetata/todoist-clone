@@ -263,7 +263,7 @@ addProjectButton.addEventListener("click", () => {
     .then((data) => {
       document.querySelector("#project-dialog-wrapper").innerHTML = data;
       const script = document.createElement("script");
-      script.defer = true; // Remove the value
+      script.defer = true;
       script.src = "js/project-dialog.js";
       document.body.appendChild(script);
     });

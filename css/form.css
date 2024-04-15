@@ -101,6 +101,6 @@ select:focus-visible {
 }
 
 .task_editor--footer {
-  border-top: silver 1px solid;
+  border-top: 1px solid #e6e6e6;
   padding: var(--padding-inline-dialog);
 }
