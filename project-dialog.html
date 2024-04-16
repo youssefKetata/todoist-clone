@@ -2,15 +2,11 @@
   <header class="project-dialog-header">
     <h2>Add project</h2>
   </header>
-
-  <div class="form-field">
-    <label for="project-name">Name</label>
-    <input type="text" id="project-name" class="projct-name-input" />
-  </div>
-
-  <!-- <label for="project-color">Color</label>
-  <input type="color" id="project-color" /> -->
   <form method="dialog">
+    <div class="form-field">
+      <label for="project-name">Name</label>
+      <input type="text" id="project-name" class="projct-name-input" />
+    </div>
     <div class="form-field">
       <div class="project-color-input">
         <label id="edit_project_modal_field_color_label">Color</label>
@@ -202,7 +198,7 @@
             >
               <span
                 class="color_dropdown_select__color"
-                style="background-color: var(--named-color-mint-green)"
+                style="background-color: var(--named-color-mint_green)"
               ></span
               ><span class="color_dropdown_select__name">Mint Green</span>
             </li>
@@ -419,7 +415,7 @@
       <div class="project_editor__footer">
         <button
           aria-label="Cancel"
-          type="button"
+          type="submit"
           aria-disabled="false"
           class="closeDialog"
           id="closeDialog"

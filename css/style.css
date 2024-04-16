@@ -275,11 +275,29 @@ button {
   margin-top: 1rem;
   font-weight: var(--fw-600);
   font-size: var(--fs-300);
-  padding-inline: 12px;
+  padding-left: 4px;
+  color: var(--btn-idle-tint);
+  border-radius: 5px;
+  height: 34px;
+}
+.nb-tasks {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: var(--fw-400);
+  color: rgb(170, 170, 170);
 }
 
 .my-projects-nav_header > .add_project {
   margin-left: auto;
+  margin-right: 4px;
+}
+
+.my-projects-nav_header:hover {
+  background-color: var(--clr-secondary-dark);
+}
+
+.my-projects-nav_header > button {
+  padding: 0;
 }
 
 .my-projects-nav_header > button svg path {
@@ -299,7 +317,7 @@ button {
   flex: 1; /* Fills remaining space */
   padding: 3.5rem;
   transition: padding-inline 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background-color: var(--clr-secondary);
+  background-color: var(--clr-primary);
 }
 
 /* dynamic padding on main content */

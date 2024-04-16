@@ -1,3 +1,29 @@
+:root {
+  --named-color-berry_red: #b8255f;
+  --named-color-red: #cf473a;
+  --named-color-orange: #c77100;
+  --named-color-yellow: #b29104;
+  --named-color-olive_green: #949c31;
+  --named-color-lime_green: #65a33a;
+  --named-color-green: #369307;
+  --named-color-mint_green: #42a393;
+  --named-color-teal: #148fad;
+  --named-color-sky_blue: #319dc0;
+  --named-color-light_blue: #6988a4;
+  --named-color-blue: #2a67e2;
+  --named-color-grape: #692ec2;
+  --named-color-violet: #ac30cc;
+  --named-color-lavender: #a4698c;
+  --named-color-magenta: #e05095;
+  --named-color-salmon: #b2635c;
+  --named-color-charcoal: #808080;
+  --named-color-grey: #999;
+  --named-color-taupe: #8f7a69;
+}
+.project-dialog-wrapper[open]::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .project-dialog-wrapper {
   padding: 16px;
   max-width: 450px !important;
@@ -18,31 +44,9 @@
   overflow-x: hidden;
   overflow-y: auto;
   cursor: pointer;
-  padding-left: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
 }
-:root {
-  --named-color-berry_red: #b8255f;
-  --named-color-red: #cf473a;
-  --named-color-orange: #c77100;
-  --named-color-yellow: #b29104;
-  --named-color-olive_green: #949c31;
-  --named-color-lime_green: #65a33a;
-  --named-color-green: #369307;
-  --named-color-mint-green: #42a393;
-  --named-color-teal: #148fad;
-  --named-color-sky_blue: #319dc0;
-  --named-color-light_blue: #6988a4;
-  --named-color-blue: #2a67e2;
-  --named-color-grape: #692ec2;
-  --named-color-violet: #ac30cc;
-  --named-color-lavender: #a4698c;
-  --named-color-magenta: #e05095;
-  --named-color-salmon: #b2635c;
-  --named-color-charcoal: #808080;
-  --named-color-grey: #999;
-  --named-color-taupe: #8f7a69;
-}
-
 .color_dropdown_select__color {
   border-radius: 6px;
   display: inline-block;
@@ -53,6 +57,7 @@
   display: flex;
   align-items: center;
   padding: 6px;
+  padding-left: 8px;
 }
 
 .color_dropdown_select__name {

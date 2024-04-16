@@ -4,13 +4,12 @@ const openDialogButton = document.querySelector("#openDialog");
 const myDialog = document.querySelector("#dialog-wrapper");
 const closeDialog = document.querySelector(".closeDialog");
 const openDialog = document.querySelector("#btn-open-dialog--non-modal");
-// make priorities available to create-ask.js file
-
 export const priorities = ["low", "medium", "high", "default"];
 const todoTitle = document.querySelector("#todo-title");
 const projectsList = JSON.parse(localStorage.getItem("projects"));
 const projects_ul = document.querySelector("#pojects-ul");
 const projectSelect = document.querySelector("#todo-project");
+const projectsSideBarList = document.querySelector("#projects_list");
 let projects = [];
 
 // funtion too add all the projects to the select input
@@ -20,7 +19,7 @@ const addProject = (project) => {
   option.textContent = project.title;
   projectSelect.appendChild(option);
 };
-
+// open and close todo dialog
 openDialogButton.addEventListener("click", () => {
   if (!myDialog.open) {
     myDialog.showModal();
@@ -42,6 +41,7 @@ myDialog.addEventListener("click", (event) => {
 // funtion that format date object to string
 const formatDate = (date) => date.toISOString().split("T")[0];
 
+// sync between local storage and the projects array
 const updateProjectsList = () => {
   localStorage.setItem("projects", JSON.stringify(projects));
   renderProjects();
@@ -58,8 +58,12 @@ const createProject = (title, color) => {
   const getTodos = () => {
     return todos;
   };
+  title = title.toLowerCase();
   projects.push({ title, color, todos, addTodo, removeTodo, getTodos });
   updateProjectsList();
+  updateSideBarProjectsList();
+  updateProjectsListAsOptions();
+
   return { title, color, todos, addTodo, removeTodo, getTodos };
 };
 
@@ -73,12 +77,14 @@ const createTodo = (
   project = "default",
   checked = false
 ) => {
+  updateProjectsList();
+  updateSideBarProjectsList();
   return { title, description, dueDate, priority, project, checked };
 };
 
 //create dafault project if it doesn't exist in the local storage
 if (!projectsList) {
-  const defaultProject = createProject("default", "grey");
+  const defaultProject = createProject("default", "var(--named-color-grey)");
   let date = formatDate(new Date());
   let defaultTodo = createTodo(
     "Default Todo",
@@ -109,16 +115,21 @@ const enableAddTaskButton = () => {
 };
 enableAddTaskButton();
 
+//update the project select input with the projects
 function addProjectOption(project) {
   const option = document.createElement("option");
   option.value = project.title;
   option.textContent = project.title;
   projectSelect.appendChild(option);
 }
-// add all the projects names as options in the select input
-projects.forEach((project) => {
-  addProjectOption(project);
-});
+function updateProjectsListAsOptions() {
+  projectSelect.innerHTML = "";
+  projects.forEach((project) => {
+    addProjectOption(project);
+  });
+}
+
+updateProjectsListAsOptions();
 
 // do the sam for priorities
 const prioritySelect = document.querySelector("#todo-priority");
@@ -211,7 +222,7 @@ projects_ul.addEventListener("click", (e) => {
     playCheckedSound();
     setTimeout(() => {
       task.remove();
-      // updateProjectsList();
+      updateProjectsList();
     }, 500);
   }
 });
@@ -222,8 +233,7 @@ const playCheckedSound = () => {
   );
   audio.play();
 };
-// set timeout before deleting the task and only remove the task from html, if the user click undo append the task again
-// if not perform the deletion
+
 // delete a task
 const deleteTask = (name) => {
   for (let i = 0; i < projects.length; i++) {
@@ -253,9 +263,7 @@ const deleteTask = (name) => {
   }
 };
 
-// listen when the user want to add a project
-// fetch the project-dialog.html and append it to the body
-// excute the code that is in the project-dialog.js file
+// append project dialog to html, avoiding long html intial file
 const addProjectButton = document.querySelector("#add_project");
 addProjectButton.addEventListener("click", () => {
   fetch("project-dialog.html")
@@ -265,8 +273,70 @@ addProjectButton.addEventListener("click", () => {
       const script = document.createElement("script");
       script.defer = true;
       script.src = "js/project-dialog.js";
+      script.type = "module";
       document.body.appendChild(script);
     });
 });
 
-export { deleteTask };
+// put all the project in ul with id projects_list
+
+function updateSideBarProjectsList() {
+  projectsSideBarList.innerHTML = "";
+  projects.forEach((project) => {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = "#";
+    var svg = `<svg
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  fill="none"
+  viewBox="0 0 24 24"
+  class=""
+  style="color: red"
+>
+  <path
+    fill="#999999"
+    fill-rule="evenodd"
+    d="M15.994 6.082a.5.5 0 1 0-.987-.164L14.493 9h-3.986l.486-2.918a.5.5 0 1 0-.986-.164L9.493 9H7a.5.5 0 1 0 0 1h2.326l-.666 4H6a.5.5 0 0 0 0 1h2.493l-.486 2.918a.5.5 0 1 0 .986.164L9.507 15h3.986l-.486 2.918a.5.5 0 1 0 .987.164L14.507 15H17a.5.5 0 1 0 0-1h-2.326l.667-4H18a.5.5 0 1 0 0-1h-2.493l.487-2.918ZM14.327 10H10.34l-.667 4h3.987l.667-4Z"
+    clip-rule="evenodd"
+  ></path>
+</svg>`;
+    a.innerHTML = createProjectSvg(project.color);
+    const projectName = document.createElement("span");
+    projectName.id = "project_name";
+    projectName.textContent = project.title;
+    const nbTasks = document.createElement("span");
+    nbTasks.classList.add("nb-tasks");
+    nbTasks.id = "nb_tasks";
+    nbTasks.textContent = project.todos.length;
+    a.appendChild(projectName);
+    a.appendChild(nbTasks);
+    li.appendChild(a);
+    projectsSideBarList.appendChild(li);
+  });
+}
+updateSideBarProjectsList();
+
+function createProjectSvg(color) {
+  return `<svg
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  fill="none"
+  viewBox="0 0 24 24"
+  class=""
+  style="color: ${color}"
+>
+  <path
+    fill=${color}
+    fill-rule="evenodd"
+    d="M15.994 6.082a.5.5 0 1 0-.987-.164L14.493 9h-3.986l.486-2.918a.5.5 0 1 0-.986-.164L9.493 9H7a.5.5 0 1 0 0 1h2.326l-.666 4H6a.5.5 0 0 0 0 1h2.493l-.486 2.918a.5.5 0 1 0 .986.164L9.507 15h3.986l-.486 2.918a.5.5 0 1 0 .987.164L14.507 15H17a.5.5 0 1 0 0-1h-2.326l.667-4H18a.5.5 0 1 0 0-1h-2.493l.487-2.918ZM14.327 10H10.34l-.667 4h3.987l.667-4Z"
+    clip-rule="evenodd"
+  ></path>
+</svg>`;
+}
+
+export { deleteTask, createProject };

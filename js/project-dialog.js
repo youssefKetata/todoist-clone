@@ -1,7 +1,9 @@
-const ul = document.querySelector("#dropdown-select-51-listbox");
-const btn = document.querySelector("#dropdown-select-51");
-const dialogModal = document.querySelector(".project-dialog-wrapper");
-const closeProjectDialog = document.querySelector("#closeDialog");
+import { createProject } from "./app.js";
+// note:  use var so that the variables can be changes on each project-dialog open
+var ul = document.querySelector("#dropdown-select-51-listbox");
+var btn = document.querySelector("#dropdown-select-51");
+var dialogModal = document.querySelector(".project-dialog-wrapper");
+var closeProjectDialog = document.querySelector("#closeDialog");
 dialogModal.showModal();
 
 for (let i = 0; i < ul.children.length; i++) {
@@ -16,10 +18,9 @@ for (let i = 0; i < ul.children.length; i++) {
     }
   });
   ul.children[i].addEventListener("click", (e) => {
-    console.log(e.currentTarget.getAttribute("data-value"));
-    const selected_color_data = document.querySelector("#selected_color_data");
+    var selected_color_data = document.querySelector("#selected_color_data");
     // get the two spans in selected_color_data element
-    const spans = selected_color_data.querySelectorAll("span");
+    var spans = selected_color_data.querySelectorAll("span");
     // change the color of the first span background to var(--named-colorName)
     spans[0].style.backgroundColor = `var(--named-color-${e.currentTarget.getAttribute(
       "data-value"
@@ -30,10 +31,10 @@ for (let i = 0; i < ul.children.length; i++) {
 }
 
 // enale the add project button only when the project name is not empty
-const projectTitle = document.querySelector("#project-name");
-const enableAddTaskButton = () => {
+var projectTitle = document.querySelector("#project-name");
+var enableAddTaskButton = () => {
   projectTitle.addEventListener("input", () => {
-    const addProjectButton = document.querySelector("#add-project");
+    var addProjectButton = document.querySelector("#add-project");
     addProjectButton.disabled = projectTitle.value ? false : true;
   });
 };
@@ -45,6 +46,18 @@ btn.addEventListener("click", (e) => {
 
 closeProjectDialog.addEventListener("click", (e) => {
   dialogModal.close();
-  const script = document.querySelector("script[src='js/project-dialog.js']");
+  var script = document.querySelector("script[src='js/project-dialog.js']");
   script.remove();
+});
+const addProjectButton = document.querySelector("#add-project");
+
+addProjectButton.addEventListener("click", (e) => {
+  // get the info from the form
+  var projectTitle = document.querySelector("#project-name").value;
+  var projectColor = document.querySelector("#selected_color_data span").style
+    .backgroundColor;
+  // var(--named-color-colorName) => colorName
+
+  // create a project object
+  var project = createProject(projectTitle, projectColor);
 });
