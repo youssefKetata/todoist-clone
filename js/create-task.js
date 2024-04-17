@@ -137,9 +137,7 @@ function createTaskActionsElement(name) {
   deleteBtn.setAttribute("id", "delete-task");
   deleteBtn.innerHTML = createDeleteButtonSvg();
   deleteBtn.addEventListener("click", () => {
-    // how can i access the variale name in the parent funtion
-
-    deleteTask(name);
+    deleteTask(name, element.closest("li"));
   });
 
   // More actions button

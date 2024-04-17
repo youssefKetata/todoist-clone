@@ -234,31 +234,53 @@ const playCheckedSound = () => {
   audio.play();
 };
 
+// funciton that creates undo note
+const createUndoNote = (timeoutId) => {
+  const undoNote = document.createElement("div");
+  undoNote.classList.add("undo-note");
+
+  const undoBtn = document.createElement("button");
+  undoBtn.classList.add("undo-btn");
+  undoBtn.textContent = "Undo";
+  undoBtn.addEventListener("click", () => {
+    renderProjects();
+    undoNote.remove();
+    clearTimeout(timeoutId);
+  });
+  undoNote.appendChild(undoBtn);
+  const closeBtn = document.createElement("button");
+  closeBtn.classList.add("close-btn");
+  closeBtn.textContent = "X";
+  // close btn
+  closeBtn.addEventListener("click", () => {
+    undoNote.remove();
+    clearTimeout(timeoutId);
+  });
+  undoNote.appendChild(closeBtn);
+  return undoNote;
+};
+
 // delete a task
-const deleteTask = (name) => {
+const deleteTask = (name, element) => {
   for (let i = 0; i < projects.length; i++) {
     const project = projects[i];
-    const foundToDo = project.todos.find((t) => t.title == name);
-    if (foundToDo) {
-      setTimeout(() => {
-        const undo = document.createElement("button");
-        undo.textContent = "Undo";
-        undo.classList.add("undo");
-        undo.addEventListener("click", () => {
-          project.todos.push(foundToDo);
-          updateProjectsList();
-          renderProjects();
-          undo.remove();
-        });
-        document.body.appendChild(undo);
-      }, 5000);
-      project.todos.splice(project.todos.indexOf(foundToDo), 1);
-      console.log(projects);
-      updateProjectsList();
-      renderProjects();
+    const foundToDo = project.todos.find((todo) => todo.title == name);
+    // remove the todo just from the screen and wait 2s to allow the user to undo
+    // if the user doesn't undo the task will be removed from the projects
+    if (typeof foundToDo !== "undefined") {
+      element.remove();
+      const timeoutId = setTimeout(() => {
+        project.todos.splice(project.todos.indexOf(foundToDo), 1);
+        updateProjectsList();
+        renderProjects();
+        undo.remove();
+      }, 3000);
+      const undo = createUndoNote(timeoutId);
+      const undo_wrapper = document.querySelector(".undo-wrapper");
+      undo_wrapper.appendChild(undo);
       break;
     } else {
-      break;
+      console.log("Task not found");
     }
   }
 };
