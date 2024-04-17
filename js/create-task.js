@@ -115,8 +115,9 @@ function createTaskActionsElement(name) {
   // Edit button
   const editButton = document.createElement("button");
   editButton.type = "button";
-  editButton.ariaLabel = "Edit";
+  editButton.ariaLabel = "Edit task";
   editButton.dataset.actionHint = "task-edit";
+  editButton.title = "Edit";
   editButton.innerHTML = createEditButtonSvg();
 
   // Due date button
@@ -135,6 +136,7 @@ function createTaskActionsElement(name) {
   deleteBtn.dataset.actionHint = "task-delete";
   deleteBtn.classList.add("task_list_item__delete_link");
   deleteBtn.setAttribute("id", "delete-task");
+  deleteBtn.title = "Delete task";
   deleteBtn.innerHTML = createDeleteButtonSvg();
   deleteBtn.addEventListener("click", () => {
     deleteTask(name, element.closest("li"));
@@ -152,7 +154,7 @@ function createTaskActionsElement(name) {
 
   // Append buttons to the element
   element.appendChild(editButton);
-  element.appendChild(dueDateButton);
+  // element.appendChild(dueDateButton);
   element.appendChild(deleteBtn);
   element.appendChild(moreButton);
 

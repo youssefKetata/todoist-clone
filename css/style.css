@@ -392,6 +392,64 @@ button {
   box-shadow: none !important;
 }
 
+/* undo delete */
+.undo-wrapper {
+  position: fixed;
+  bottom: 20px;
+  right: 40px;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 5px;
+}
+.undo-note {
+  background-color: var(--clr-primary);
+  border: 1px solid var(--clr-accent);
+  padding-block: 8px;
+  padding-inline: 18px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 100px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.2s ease-out forwards;
+}
+.undo-note > .undo-btn {
+  font-size: 13px;
+  font-weight: var(--fw-600);
+  color: var(--clr-accent);
+}
+.undo-note > .undo-btn:hover {
+  text-decoration: underline;
+}
+.undo-note > .close-btn {
+  color: #757575;
+  margin-left: auto;
+  font-size: 10px;
+}
+
+.undo-note > .text-info {
+  color: #5f5f5f;
+  font-size: 13px;
+  font-weight: 600;
+}
+.undo-note > .close-btn:hover {
+  background-color: rgba(228, 225, 225, 0.795);
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 /* Animation styles */
 @keyframes modal-appear {
   from {

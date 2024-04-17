@@ -238,6 +238,11 @@ const playCheckedSound = () => {
 const createUndoNote = (timeoutId) => {
   const undoNote = document.createElement("div");
   undoNote.classList.add("undo-note");
+  //   <p class="text-info">task deleted</p>
+  const textInfo = document.createElement("p");
+  textInfo.classList.add("text-info");
+  textInfo.textContent = "Task deleted.";
+  undoNote.appendChild(textInfo);
 
   const undoBtn = document.createElement("button");
   undoBtn.classList.add("undo-btn");
