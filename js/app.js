@@ -3,22 +3,19 @@ import appendTask from "./create-task.js";
 const openDialogButton = document.querySelector("#openDialog");
 const myDialog = document.querySelector("#dialog-wrapper");
 const closeDialog = document.querySelector(".closeDialog");
-const openDialog = document.querySelector("#btn-open-dialog--non-modal");
+const openDialogNonModal = document.querySelector(
+  "#btn-open-dialog--non-modal"
+);
 export const priorities = ["low", "medium", "high", "default"];
 const todoTitle = document.querySelector("#todo-title");
 const projectsList = JSON.parse(localStorage.getItem("projects"));
 const projects_ul = document.querySelector("#pojects-ul");
 const projectSelect = document.querySelector("#todo-project");
 const projectsSideBarList = document.querySelector("#projects_list");
+const todoForm = document.querySelector("#newTodo-form");
+const prioritySelect = document.querySelector("#todo-priority");
 let projects = [];
 
-// funtion too add all the projects to the select input
-const addProject = (project) => {
-  const option = document.createElement("option");
-  option.value = project.title;
-  option.textContent = project.title;
-  projectSelect.appendChild(option);
-};
 // open and close todo dialog
 openDialogButton.addEventListener("click", () => {
   if (!myDialog.open) {
@@ -38,10 +35,10 @@ myDialog.addEventListener("click", (event) => {
   }
 });
 
-// funtion that format date object to string
+// format date object to string
 const formatDate = (date) => date.toISOString().split("T")[0];
 
-// sync between local storage and the projects array
+// sync between local storage and the projects variable
 const updateProjectsList = () => {
   localStorage.setItem("projects", JSON.stringify(projects));
   renderProjects();
@@ -49,22 +46,14 @@ const updateProjectsList = () => {
 
 const createProject = (title, color) => {
   let todos = [];
-  const addTodo = (todo) => {
-    todos.push(todo);
-  };
-  const removeTodo = (index) => {
-    todos.splice(index, 1);
-  };
-  const getTodos = () => {
-    return todos;
-  };
   title = title.toLowerCase();
-  projects.push({ title, color, todos, addTodo, removeTodo, getTodos });
+  projects.push({ title, color, todos });
+
   updateProjectsList();
   updateSideBarProjectsList();
   updateProjectsListAsOptions();
 
-  return { title, color, todos, addTodo, removeTodo, getTodos };
+  return { title, color, todos };
 };
 
 // factory function to create todo objects
@@ -94,14 +83,11 @@ if (!projectsList) {
   );
   defaultProject.addTodo(defaultTodo);
   projects = [defaultProject];
+  console.log("projects", projects);
   localStorage.setItem("projects", JSON.stringify(projects));
+  console.log(localStorage.getItem("projects"));
 } else {
   projects = projectsList;
-}
-
-// create other project
-if (projects.length == 1) {
-  const project2 = createProject("Project 2", "blue");
 }
 
 // render existed projects in the local storage
@@ -110,29 +96,39 @@ renderProjects();
 const enableAddTaskButton = () => {
   todoTitle.addEventListener("input", () => {
     const addTaskButton = document.querySelector("#add-task");
-    addTaskButton.disabled = todoTitle.value ? false : true;
+    console.log("inpu value: ", todoTitle.value);
+    console.log(todoTitle.value !== "");
+    if (todoTitle.value !== "") {
+      addTaskButton.disabled = false;
+      // change aria-disabled to false
+      addTaskButton.setAttribute("aria-disabled", false);
+      // addTaskButton.setAttribute(('aria-disabled' = false));
+    } else {
+      addTaskButton.disabled = true;
+      addTaskButton.setAttribute("aria-disabled", true);
+    }
   });
 };
 enableAddTaskButton();
 
-//update the project select input with the projects
+//update the project list in add-task dialog
 function addProjectOption(project) {
   const option = document.createElement("option");
   option.value = project.title;
   option.textContent = project.title;
   projectSelect.appendChild(option);
 }
+
+//update project options when creating a new task
 function updateProjectsListAsOptions() {
   projectSelect.innerHTML = "";
   projects.forEach((project) => {
     addProjectOption(project);
   });
 }
-
 updateProjectsListAsOptions();
 
-// do the sam for priorities
-const prioritySelect = document.querySelector("#todo-priority");
+// priorities
 priorities.forEach((priority) => {
   const option = document.createElement("option");
   option.value = priority;
@@ -146,7 +142,6 @@ const todayFormatted = today.toISOString().split("T")[0];
 document.getElementById("todo-dueDate").min = todayFormatted;
 
 // listen for form submission
-const todoForm = document.querySelector("#newTodo-form");
 todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const title = document.querySelector("#todo-title").value;
@@ -154,8 +149,7 @@ todoForm.addEventListener("submit", (e) => {
   const dueDate = document.querySelector("#todo-dueDate").value;
   const priority = document.querySelector("#todo-priority").value;
   const project = document.querySelector("#todo-project").value;
-  // identify the project that the todo belongs to
-
+  // find project that the todo belongs to
   const projectObject = projects.find((p) => p.title == project);
   const newTodo = createTodo(title, description, dueDate, priority);
   projectObject.todos.push(newTodo);
@@ -166,41 +160,60 @@ todoForm.addEventListener("submit", (e) => {
   renderProjects();
 });
 
-function renderProjects() {
-  // render task which are not checked yet
+function renderProject(project) {
+  project.todos.forEach((todo) => {
+    if (!todo.checked) {
+      const task = appendTask(
+        todo.title,
+        todo.description,
+        todo.dueDate,
+        todo.priority
+      );
+      projects_ul.appendChild(task);
+    }
+  });
+}
+// render the projects, or render one particular project
+function renderProjects(project = projects) {
   projects_ul.innerHTML = "";
+  // render a particular project
+  if (project.hasOwnProperty("todos")) {
+    renderProject(project);
+    return;
+  }
+  // render all projects
   projects.forEach((project) => {
-    project.todos.forEach((todo) => {
-      if (!todo.checked) {
-        const task = appendTask(
-          todo.title,
-          todo.description,
-          todo.dueDate,
-          todo.priority
-        );
-        projects_ul.appendChild(task);
-      }
-    });
+    renderProject(project);
   });
 }
 
 // open the dialog as non modal
-openDialog.addEventListener("click", () => {
+const non_modal_dialog_wrapper = document.querySelector(
+  "#non-modal-dialog-wrapper"
+);
+
+openDialogNonModal.addEventListener("click", () => {
   // Check if a dialog already exists
-  if (!document.querySelector("yDialogClone")) {
+  if (!document.querySelector(".DialogClone")) {
     const dialogclone = myDialog.cloneNode(true);
     dialogclone.classList.add("DialogClone");
     const closeBtn = dialogclone.querySelector(".closeDialog");
+    dialogclone.dataset.dialog = "non-modal";
+
     closeBtn.addEventListener("click", () => {
       dialogclone.close();
+      dialogclone.remove();
+      non_modal_dialog_wrapper.appendChild(openDialogNonModal);
     });
     enableAddTaskButton();
-    openDialog.parentElement.appendChild(dialogclone);
+    non_modal_dialog_wrapper.removeChild(openDialogNonModal);
+    non_modal_dialog_wrapper.appendChild(dialogclone);
     dialogclone.show();
     dialogclone.classList.add("non-modal-position");
   }
 });
 
+// check todos
 projects_ul.addEventListener("click", (e) => {
   if (e.target.classList.contains("task-checkbox-circle")) {
     const task = e.target.closest("li");
@@ -305,12 +318,12 @@ addProjectButton.addEventListener("click", () => {
     });
 });
 
-// put all the project in ul with id projects_list
-
+// update side bar projects list
 function updateSideBarProjectsList() {
   projectsSideBarList.innerHTML = "";
   projects.forEach((project) => {
     const li = document.createElement("li");
+
     const a = document.createElement("a");
     a.href = "#";
     var svg = `<svg
@@ -365,5 +378,25 @@ function createProjectSvg(color) {
   ></path>
 </svg>`;
 }
+
+projectsSideBarList.addEventListener("click", (e) => {
+  const index = Array.from(projectsSideBarList.children).indexOf(
+    e.target.closest("li")
+  );
+  const project = projects[index];
+  renderProjects(project);
+});
+
+const navigation_list = document.querySelector("#navigation_list");
+navigation_list.addEventListener("click", (e) => {
+  console.log(e.target.closest("li"));
+});
+
+// test
+const pojects_ul = document.querySelector("#pojects-ul");
+pojects_ul.addEventListener("dragenter", (e) => {
+  e.preventDefault();
+  console.log("dragenter", e.target);
+});
 
 export { deleteTask, createProject };

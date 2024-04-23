@@ -147,8 +147,8 @@
           </div>
           <div class="navigation">
             <div>
-              <ul>
-                <li>
+              <ul id="navigation_list">
+                <li aria-labelledby="inbox">
                   <a href="#">
                     <svg
                       xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -281,6 +281,7 @@
       <section aria-label="Main content" id="content" class="main_content">
         <!-- projects list -->
         <div class="project-list">
+          <h2 class="main_content-title">Inbox</h2>
           <ul class="pojects-ul" id="pojects-ul">
             <li class="youssef">
               <div class="task_list_item">
@@ -465,18 +466,26 @@
           </ul>
         </div>
         <div id="project-list"></div>
-
-        <button class="btn btn-open-dialog" id="btn-open-dialog--non-modal">
-          Add task
-        </button>
+        <div id="non-modal-dialog-wrapper">
+          <button
+            class="btn btn-open-dialog btn-open-dialog--non-modal"
+            id="btn-open-dialog--non-modal"
+          >
+            <span class="icon_add">
+              <svg width="13" height="13">
+                <path
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                  d="M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z"
+                ></path>
+              </svg>
+            </span>
+            add task
+          </button>
+        </div>
       </section>
     </div>
     <div id="project-dialog-wrapper"></div>
-    <style>
-      .dialog-wrapper::backdrop {
-        color: rgba(97, 13, 13, 0.986);
-      }
-    </style>
 
     <dialog id="dialog-wrapper" class="dialog-wrapper" methode="dialog">
       <form class="task_editor" id="newTodo-form">

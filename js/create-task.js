@@ -84,6 +84,11 @@ export default function appendTask(name, description, dueDate, priority) {
   divTaskListItem.appendChild(divTaskListItemContent);
 
   li.appendChild(divTaskListItem);
+  // li dragable
+  li.draggable = true;
+  li.addEventListener("dragstart", (e) => {});
+  li.addEventListener("drag", (e) => {});
+  li.addEventListener("dragend", (e) => {});
 
   let divEmpty = document.createElement("div");
 

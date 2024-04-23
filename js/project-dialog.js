@@ -59,5 +59,5 @@ addProjectButton.addEventListener("click", (e) => {
   // var(--named-color-colorName) => colorName
 
   // create a project object
-  var project = createProject(projectTitle, projectColor);
+  createProject(projectTitle, projectColor);
 });

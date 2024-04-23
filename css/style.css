@@ -320,6 +320,10 @@ button {
   background-color: var(--clr-primary);
 }
 
+.main_content-title {
+  margin-block: 1rem;
+}
+
 /* dynamic padding on main content */
 .main_content > * {
   padding-inline: 1rem;
@@ -365,9 +369,20 @@ button {
   animation: modal-disappear 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) both;
   transform-origin: bottom center;
   border: none;
-  margin-top: 4rem;
   max-width: 550px;
   width: 100%;
+}
+
+.dialog-wrapper[open][data-dialog="non-modal"] {
+  border: 1px solid rgb(230, 230, 230);
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.dialog-wrapper[open][data-dialog="non-modal"] {
+  margin: 0;
+  width: 100%;
+  max-width: none;
 }
 
 .dialog-wrapper[open] {
@@ -384,6 +399,35 @@ button {
 
 .dialog-wrapper[open]::backdrop {
   background: none;
+}
+
+.btn-open-dialog--non-modal {
+  color: var(--btn-idle-tint);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+.btn-open-dialog--non-modal:hover {
+  color: var(--clr-accent);
+}
+
+.icon_add {
+  background-color: rgb(220, 76, 62);
+  border-radius: 100%;
+  aspect-ratio: 1;
+  height: 21px;
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+}
+.icon_add > * {
+  visibility: visible;
+}
+.btn-open-dialog:hover .icon_add {
+  visibility: visible;
+  color: rgb(255, 255, 255);
+  transform: scale(0.846);
 }
 
 .non-modal-position {
