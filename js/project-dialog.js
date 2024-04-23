@@ -5,6 +5,7 @@ var btn = document.querySelector("#dropdown-select-51");
 var dialogModal = document.querySelector(".project-dialog-wrapper");
 var closeProjectDialog = document.querySelector("#closeDialog");
 dialogModal.showModal();
+console.log("project dialog opened");
 
 for (let i = 0; i < ul.children.length; i++) {
   ul.children[i].addEventListener("mouseover", (e) => {
@@ -43,12 +44,23 @@ enableAddTaskButton();
 btn.addEventListener("click", (e) => {
   ul.style.display = ul.style.display == "block" ? "none" : "block";
 });
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeDialog();
+  }
+});
 
 closeProjectDialog.addEventListener("click", (e) => {
-  dialogModal.close();
-  var script = document.querySelector("script[src='js/project-dialog.js']");
-  script.remove();
+  closeDialog();
 });
+
+function closeDialog() {
+  // the src has query parameter to identify the script(timestamp)
+  var script = document.querySelector("script[src^='js/project-dialog.js']");
+  script.remove();
+  console.log("project dialog closed", script);
+  dialogModal.close();
+}
 const addProjectButton = document.querySelector("#add-project");
 
 addProjectButton.addEventListener("click", (e) => {
@@ -56,7 +68,6 @@ addProjectButton.addEventListener("click", (e) => {
   var projectTitle = document.querySelector("#project-name").value;
   var projectColor = document.querySelector("#selected_color_data span").style
     .backgroundColor;
-  // var(--named-color-colorName) => colorName
 
   // create a project object
   createProject(projectTitle, projectColor);

@@ -383,6 +383,8 @@ button {
   margin: 0;
   width: 100%;
   max-width: none;
+  opacity: 1;
+  animation: none;
 }
 
 .dialog-wrapper[open] {
@@ -407,6 +409,9 @@ button {
   align-items: center;
   gap: 10px;
   width: 100%;
+}
+.non-modal-dialog-wrapper {
+  margin-top: 5px;
 }
 .btn-open-dialog--non-modal:hover {
   color: var(--clr-accent);

@@ -94,10 +94,11 @@ if (!projectsList) {
 renderProjects();
 
 const enableAddTaskButton = () => {
+  console.log("here");
+  const addTaskButton = document.querySelector("#add-task");
+
+  console.log("button", addTaskButton);
   todoTitle.addEventListener("input", () => {
-    const addTaskButton = document.querySelector("#add-task");
-    console.log("inpu value: ", todoTitle.value);
-    console.log(todoTitle.value !== "");
     if (todoTitle.value !== "") {
       addTaskButton.disabled = false;
       // change aria-disabled to false
@@ -304,19 +305,31 @@ const deleteTask = (name, element) => {
 };
 
 // append project dialog to html, avoiding long html intial file
+// append project dialog only the first time and then hide and show it
+// when the user clicks on the add project button
+const addProjectDialog = document.querySelector("#project-dialog-wrapper");
 const addProjectButton = document.querySelector("#add_project");
 addProjectButton.addEventListener("click", () => {
-  fetch("project-dialog.html")
-    .then((response) => response.text())
-    .then((data) => {
-      document.querySelector("#project-dialog-wrapper").innerHTML = data;
-      const script = document.createElement("script");
-      script.defer = true;
-      script.src = "js/project-dialog.js";
-      script.type = "module";
-      document.body.appendChild(script);
-    });
+  if (addProjectDialog.innerHTML == "") {
+    fetch("project-dialog.html")
+      .then((response) => response.text())
+      .then((data) => {
+        addProjectDialog.innerHTML = data;
+        loadScript();
+      });
+  } else {
+    loadScript();
+  }
 });
+
+// add query parameter to the script to avoid caching
+function loadScript() {
+  const script = document.createElement("script");
+  script.defer = true;
+  script.src = "js/project-dialog.js?" + new Date().getTime();
+  script.type = "module";
+  document.body.appendChild(script);
+}
 
 // update side bar projects list
 function updateSideBarProjectsList() {
