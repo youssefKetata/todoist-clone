@@ -4,6 +4,7 @@ var ul = document.querySelector("#dropdown-select-51-listbox");
 var btn = document.querySelector("#dropdown-select-51");
 var dialogModal = document.querySelector(".project-dialog-wrapper");
 var closeProjectDialog = document.querySelector("#closeDialog");
+var projectForm = document.querySelector("#project-form");
 dialogModal.showModal();
 console.log("project dialog opened");
 
@@ -33,42 +34,51 @@ for (let i = 0; i < ul.children.length; i++) {
 
 // enale the add project button only when the project name is not empty
 var projectTitle = document.querySelector("#project-name");
-var enableAddTaskButton = () => {
-  projectTitle.addEventListener("input", () => {
-    var addProjectButton = document.querySelector("#add-project");
-    addProjectButton.disabled = projectTitle.value ? false : true;
-  });
+var addProjectButton = document.querySelector("#add-project");
+function addProjectButtonState() {
+  console.log(projectTitle.value);
+  addProjectButton.disabled = projectTitle.value ? false : true;
+}
+var enaleAddTaskButton = () => {
+  projectTitle.addEventListener("input", addProjectButtonState);
 };
-enableAddTaskButton();
+enaleAddTaskButton();
 
 btn.addEventListener("click", (e) => {
   ul.style.display = ul.style.display == "block" ? "none" : "block";
 });
-window.addEventListener("keydown", (e) => {
+// add the event listenr only when ther is a project dialog open
+const escKeyListener = (e) => {
   if (e.key === "Escape") {
     closeDialog();
   }
-});
+};
 
-closeProjectDialog.addEventListener("click", (e) => {
-  closeDialog();
-});
+window.addEventListener("keydown", escKeyListener);
+closeProjectDialog.addEventListener("click", closeDialog);
 
 function closeDialog() {
   // the src has query parameter to identify the script(timestamp)
   var script = document.querySelector("script[src^='js/project-dialog.js']");
-  script.remove();
-  console.log("project dialog closed", script);
-  dialogModal.close();
+  if (script) {
+    script.remove();
+    console.log("project dialog closed", script);
+    window.removeEventListener("keydown", escKeyListener);
+    addProjectButton.removeEventListener("click", newProjectFunction);
+    closeProjectDialog.removeEventListener("click", closeDialog);
+    projectTitle.removeEventListener("input", addProjectButtonState);
+    dialogModal.close();
+  }
 }
-const addProjectButton = document.querySelector("#add-project");
 
-addProjectButton.addEventListener("click", (e) => {
-  // get the info from the form
+addProjectButton.addEventListener("click", newProjectFunction);
+
+function newProjectFunction() {
   var projectTitle = document.querySelector("#project-name").value;
   var projectColor = document.querySelector("#selected_color_data span").style
     .backgroundColor;
+  projectForm.reset();
 
   // create a project object
   createProject(projectTitle, projectColor);
-});
+}

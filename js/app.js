@@ -75,17 +75,15 @@ const createTodo = (
 if (!projectsList) {
   const defaultProject = createProject("default", "var(--named-color-grey)");
   let date = formatDate(new Date());
-  let defaultTodo = createTodo(
-    "Default Todo",
-    "This is the default todo",
+  const defaultTodo = createTodo(
+    "default todo",
+    "this is the default default todo",
     date,
-    priorities[3]
+    priorities[2]
   );
-  defaultProject.addTodo(defaultTodo);
+  defaultProject.todos.push(defaultTodo);
   projects = [defaultProject];
-  console.log("projects", projects);
   localStorage.setItem("projects", JSON.stringify(projects));
-  console.log(localStorage.getItem("projects"));
 } else {
   projects = projectsList;
 }
@@ -93,11 +91,12 @@ if (!projectsList) {
 // render existed projects in the local storage
 renderProjects();
 
-const enableAddTaskButton = () => {
-  console.log("here");
-  const addTaskButton = document.querySelector("#add-task");
+const enableAddTaskButton = (addTaskBtn = "") => {
+  var addTaskButton = document.querySelector("#add-task");
+  if (addTaskBtn !== "") {
+    addTaskButton = addTaskBtn;
+  }
 
-  console.log("button", addTaskButton);
   todoTitle.addEventListener("input", () => {
     if (todoTitle.value !== "") {
       addTaskButton.disabled = false;
