@@ -7,7 +7,7 @@ const openDialogNonModal = document.querySelector(
   "#btn-open-dialog--non-modal"
 );
 export const priorities = ["low", "medium", "high", "default"];
-const todoTitle = document.querySelector("#todo-title");
+
 const projectsList = JSON.parse(localStorage.getItem("projects"));
 const projects_ul = document.querySelector("#pojects-ul");
 const projectSelect = document.querySelector("#todo-project");
@@ -91,13 +91,23 @@ if (!projectsList) {
 // render existed projects in the local storage
 renderProjects();
 
-const enableAddTaskButton = () => {
+const enableAddTaskButton = (dialogHTML) => {
+  // acces the #add-task form dialogHTML
+  if (!dialogHTML) {
+    var addTaskButton = document.querySelector("#add-task");
+    var todoTitle = document.querySelector("#todo-title");
+    console.log(addTaskButton);
+  } else {
+    var addTaskButton = dialogHTML.querySelector("#add-task");
+    var todoTitle = dialogHTML.querySelector("#todo-title");
+    console.log(addTaskButton);
+  }
+
   todoTitle.addEventListener("input", () => {
     if (todoTitle.value !== "") {
       addTaskButton.disabled = false;
       // change aria-disabled to false
       addTaskButton.setAttribute("aria-disabled", false);
-      // addTaskButton.setAttribute(('aria-disabled' = false));
     } else {
       addTaskButton.disabled = true;
       addTaskButton.setAttribute("aria-disabled", true);
@@ -136,9 +146,9 @@ const today = new Date();
 const todayFormatted = today.toISOString().split("T")[0];
 document.getElementById("todo-dueDate").min = todayFormatted;
 
-// listen for form submission
-todoForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+function handleTodoFormSubmit(e, todoFrm = todoForm) {
+  console.log("submitted");
+  // e.preventDefault();
   const title = document.querySelector("#todo-title").value;
   const description = document.querySelector("#todo-description").value;
   const dueDate = document.querySelector("#todo-dueDate").value;
@@ -150,10 +160,13 @@ todoForm.addEventListener("submit", (e) => {
   projectObject.todos.push(newTodo);
   updateProjectsList();
 
-  todoForm.reset();
+  todoFrm.reset();
   myDialog.close();
   renderProjects();
-});
+}
+
+// listen for form submission
+todoForm.addEventListener("submit", handleTodoFormSubmit);
 
 function renderProject(project) {
   project.todos.forEach((todo) => {
@@ -193,14 +206,18 @@ openDialogNonModal.addEventListener("click", () => {
     const dialogclone = myDialog.cloneNode(true);
     dialogclone.classList.add("DialogClone");
     const closeBtn = dialogclone.querySelector(".closeDialog");
+    // for css selectors
     dialogclone.dataset.dialog = "non-modal";
 
     closeBtn.addEventListener("click", () => {
       dialogclone.close();
       dialogclone.remove();
+      console.log(openDialogNonModal);
       non_modal_dialog_wrapper.appendChild(openDialogNonModal);
     });
-    enableAddTaskButton();
+    enableAddTaskButton(dialogclone);
+    // listen for from submmision and handleTodoFormSubmit
+    dialogclone.addEventListener("submit", handleTodoFormSubmit);
     non_modal_dialog_wrapper.removeChild(openDialogNonModal);
     non_modal_dialog_wrapper.appendChild(dialogclone);
     dialogclone.show();
