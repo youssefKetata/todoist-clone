@@ -96,11 +96,9 @@ const enableAddTaskButton = (dialogHTML) => {
   if (!dialogHTML) {
     var addTaskButton = document.querySelector("#add-task");
     var todoTitle = document.querySelector("#todo-title");
-    console.log(addTaskButton);
   } else {
     var addTaskButton = dialogHTML.querySelector("#add-task");
     var todoTitle = dialogHTML.querySelector("#todo-title");
-    console.log(addTaskButton);
   }
 
   todoTitle.addEventListener("input", () => {
@@ -146,9 +144,9 @@ const today = new Date();
 const todayFormatted = today.toISOString().split("T")[0];
 document.getElementById("todo-dueDate").min = todayFormatted;
 
-function handleTodoFormSubmit(e, todoFrm = todoForm) {
+function handleTodoFormSubmit(e, todoFrm = todoForm, dialog = myDialog) {
+  e.preventDefault();
   console.log("submitted");
-  // e.preventDefault();
   const title = document.querySelector("#todo-title").value;
   const description = document.querySelector("#todo-description").value;
   const dueDate = document.querySelector("#todo-dueDate").value;
@@ -161,7 +159,7 @@ function handleTodoFormSubmit(e, todoFrm = todoForm) {
   updateProjectsList();
 
   todoFrm.reset();
-  myDialog.close();
+  dialog.close();
   renderProjects();
 }
 
@@ -206,22 +204,26 @@ openDialogNonModal.addEventListener("click", () => {
     const dialogclone = myDialog.cloneNode(true);
     dialogclone.classList.add("DialogClone");
     const closeBtn = dialogclone.querySelector(".closeDialog");
-    // for css selectors
-    dialogclone.dataset.dialog = "non-modal";
-
+    dialogclone.dataset.dialog = "non-modal"; // for css selectors
     closeBtn.addEventListener("click", () => {
       dialogclone.close();
       dialogclone.remove();
-      console.log(openDialogNonModal);
-      non_modal_dialog_wrapper.appendChild(openDialogNonModal);
+      openDialogNonModal.style.display = "flex";
     });
     enableAddTaskButton(dialogclone);
-    // listen for from submmision and handleTodoFormSubmit
-    dialogclone.addEventListener("submit", handleTodoFormSubmit);
-    non_modal_dialog_wrapper.removeChild(openDialogNonModal);
+
+    dialogclone.addEventListener("submit", (e) => {
+      handleTodoFormSubmit(e, dialogclone.children[0], dialogclone);
+      openDialogNonModal.style.display = "flex";
+    });
+    openDialogNonModal.style.display = "none";
     non_modal_dialog_wrapper.appendChild(dialogclone);
     dialogclone.show();
     dialogclone.classList.add("non-modal-position");
+  } else {
+    const dialog = document.querySelector(".DialogClone");
+    dialog.show();
+    openDialogNonModal.style.display = "none";
   }
 });
 

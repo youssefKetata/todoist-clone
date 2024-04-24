@@ -122,7 +122,8 @@ select {
 
 .container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
 }
 
 .side-bar-container {
@@ -134,7 +135,6 @@ select {
   width: var(--sidebar-width);
   max-width: 100% !important;
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  height: 100vh;
 }
 
 .sidebar-header {
@@ -318,6 +318,7 @@ button {
   padding: 3.5rem;
   transition: padding-inline 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: var(--clr-primary);
+  padding-bottom: 8rem;
 }
 
 .main_content-title {
