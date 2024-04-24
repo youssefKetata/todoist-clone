@@ -91,12 +91,7 @@ if (!projectsList) {
 // render existed projects in the local storage
 renderProjects();
 
-const enableAddTaskButton = (addTaskBtn = "") => {
-  var addTaskButton = document.querySelector("#add-task");
-  if (addTaskBtn !== "") {
-    addTaskButton = addTaskBtn;
-  }
-
+const enableAddTaskButton = () => {
   todoTitle.addEventListener("input", () => {
     if (todoTitle.value !== "") {
       addTaskButton.disabled = false;
