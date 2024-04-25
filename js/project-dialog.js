@@ -1,13 +1,15 @@
 import { createProject } from "./app.js";
-// note:  use var so that the variables can be changes on each project-dialog open
-var ul = document.querySelector("#dropdown-select-51-listbox");
-var btn = document.querySelector("#dropdown-select-51");
-var dialogModal = document.querySelector(".project-dialog-wrapper");
-var closeProjectDialog = document.querySelector("#closeDialog");
-var projectForm = document.querySelector("#project-form");
-dialogModal.showModal();
-console.log("project dialog opened");
+let ul = document.querySelector("#dropdown-select-51-listbox");
+let btn = document.querySelector("#dropdown-select-51");
+let dialogModal = document.querySelector(".project-dialog-wrapper");
+let projectTitle = document.querySelector("#project-name");
+let addProjectButton = document.querySelector("#add-project");
+let closeProjectDialog = document.querySelector("#closeDialog");
+let projectForm = document.querySelector("#project-form");
 
+dialogModal.showModal();
+
+// Event listeners for dropdown options
 for (let i = 0; i < ul.children.length; i++) {
   ul.children[i].addEventListener("mouseover", (e) => {
     if (e.target.tagName == "LI") {
@@ -20,10 +22,8 @@ for (let i = 0; i < ul.children.length; i++) {
     }
   });
   ul.children[i].addEventListener("click", (e) => {
-    var selected_color_data = document.querySelector("#selected_color_data");
-    // get the two spans in selected_color_data element
-    var spans = selected_color_data.querySelectorAll("span");
-    // change the color of the first span background to var(--named-colorName)
+    let selected_color_data = document.querySelector("#selected_color_data");
+    let spans = selected_color_data.querySelectorAll("span");
     spans[0].style.backgroundColor = `var(--named-color-${e.currentTarget.getAttribute(
       "data-value"
     )})`;
@@ -32,21 +32,20 @@ for (let i = 0; i < ul.children.length; i++) {
   });
 }
 
-// enale the add project button only when the project name is not empty
-var projectTitle = document.querySelector("#project-name");
-var addProjectButton = document.querySelector("#add-project");
+// control the add project button state
 function addProjectButtonState() {
-  console.log(projectTitle.value);
+  console.log(projectTitle.value ? false : true);
   addProjectButton.disabled = projectTitle.value ? false : true;
 }
-var enaleAddTaskButton = () => {
-  projectTitle.addEventListener("input", addProjectButtonState);
-};
-enaleAddTaskButton();
+projectTitle.addEventListener("input", addProjectButtonState);
 
-btn.addEventListener("click", (e) => {
-  ul.style.display = ul.style.display == "block" ? "none" : "block";
-});
+// hide and show the dropdown
+btn.addEventListener("click", controlDropDown);
+
+function controlDropDown() {
+  ul.style.display = ul.style.display === "block" ? "none" : "block";
+}
+
 // add the event listenr only when ther is a project dialog open
 const escKeyListener = (e) => {
   if (e.key === "Escape") {
@@ -59,26 +58,27 @@ closeProjectDialog.addEventListener("click", closeDialog);
 
 function closeDialog() {
   // the src has query parameter to identify the script(timestamp)
-  var script = document.querySelector("script[src^='js/project-dialog.js']");
+  let script = document.querySelector("script[src^='js/project-dialog.js']");
   if (script) {
     script.remove();
-    console.log("project dialog closed", script);
-    window.removeEventListener("keydown", escKeyListener);
-    addProjectButton.removeEventListener("click", newProjectFunction);
-    closeProjectDialog.removeEventListener("click", closeDialog);
     projectTitle.removeEventListener("input", addProjectButtonState);
+    btn.removeEventListener("click", controlDropDown);
+    window.removeEventListener("keydown", escKeyListener);
+    closeProjectDialog.removeEventListener("click", closeDialog);
+    addProjectButton.removeEventListener("click", newProjectFunction);
     dialogModal.close();
+    projectForm.reset();
+    addProjectButton.disabled = true;
   }
 }
 
 addProjectButton.addEventListener("click", newProjectFunction);
 
 function newProjectFunction() {
-  var projectTitle = document.querySelector("#project-name").value;
-  var projectColor = document.querySelector("#selected_color_data span").style
+  let projectTitle = document.querySelector("#project-name").value;
+  let projectColor = document.querySelector("#selected_color_data span").style
     .backgroundColor;
   projectForm.reset();
-
-  // create a project object
   createProject(projectTitle, projectColor);
+  closeDialog();
 }

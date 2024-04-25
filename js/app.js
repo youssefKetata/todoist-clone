@@ -117,6 +117,8 @@ enableAddTaskButton();
 //update the project list in add-task dialog
 function addProjectOption(project) {
   const option = document.createElement("option");
+  console.log("project name is : ", project.title === "default");
+  project.title === "default" && (option.defaultSelected = true);
   option.value = project.title;
   option.textContent = project.title;
   projectSelect.appendChild(option);
@@ -134,6 +136,8 @@ updateProjectsListAsOptions();
 // priorities
 priorities.forEach((priority) => {
   const option = document.createElement("option");
+  // set default to default
+  priority === "default" && (option.defaultSelected = true);
   option.value = priority;
   option.textContent = priority;
   prioritySelect.appendChild(option);
@@ -146,7 +150,7 @@ document.getElementById("todo-dueDate").min = todayFormatted;
 
 function handleTodoFormSubmit(e, todoFrm = todoForm, dialog = myDialog) {
   e.preventDefault();
-  console.log("submitted");
+
   const title = document.querySelector("#todo-title").value;
   console.log("title is : ", title);
   const description = document.querySelector("#todo-description").value;
@@ -158,6 +162,7 @@ function handleTodoFormSubmit(e, todoFrm = todoForm, dialog = myDialog) {
   const newTodo = createTodo(title, description, dueDate, priority);
   projectObject.todos.push(newTodo);
   updateProjectsList();
+  updateSideBarProjectsList();
 
   todoFrm.reset();
   dialog.close();
@@ -215,8 +220,8 @@ openDialogNonModal.addEventListener("click", () => {
 
     dialogclone.addEventListener("submit", (e) => {
       handleTodoFormSubmit(e, dialogclone.children[0], dialogclone);
+      updateSideBarProjectsList();
       openDialogNonModal.style.display = "flex";
-      // remove the dialog
       dialogclone.remove();
     });
     openDialogNonModal.style.display = "none";
@@ -224,9 +229,7 @@ openDialogNonModal.addEventListener("click", () => {
     dialogclone.show();
     dialogclone.classList.add("non-modal-position");
   } else {
-    // const dialog = document.querySelector(".DialogClone");
-    // dialog.show();
-    // openDialogNonModal.style.display = "none";
+    console.log("error loading the dialog");
   }
 });
 
