@@ -398,6 +398,7 @@ button {
   opacity: 0; /* Initially hidden */
   animation: modal-appear 0.1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
   transform-origin: bottom center;
+  margin: 10% auto;
 }
 
 .dialog-wrapper[open]::backdrop {

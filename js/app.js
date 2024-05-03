@@ -74,14 +74,6 @@ const createTodo = (
 //create dafault project if it doesn't exist in the local storage
 if (!projectsList) {
   const defaultProject = createProject("default", "var(--named-color-grey)");
-  let date = formatDate(new Date());
-  const defaultTodo = createTodo(
-    "default todo",
-    "this is the default default todo",
-    date,
-    priorities[2]
-  );
-  defaultProject.todos.push(defaultTodo);
   projects = [defaultProject];
   localStorage.setItem("projects", JSON.stringify(projects));
 } else {
@@ -268,19 +260,20 @@ const playCheckedSound = () => {
 };
 
 // funciton that creates undo note
-const createUndoNote = (timeoutId) => {
+const createUndoNote = (timeoutId, foundToDo, project) => {
   const undoNote = document.createElement("div");
   undoNote.classList.add("undo-note");
-  //   <p class="text-info">task deleted</p>
   const textInfo = document.createElement("p");
   textInfo.classList.add("text-info");
   textInfo.textContent = "Task deleted.";
   undoNote.appendChild(textInfo);
-
   const undoBtn = document.createElement("button");
   undoBtn.classList.add("undo-btn");
   undoBtn.textContent = "Undo";
+  // undo the deletion
   undoBtn.addEventListener("click", () => {
+    project.todos.push(foundToDo);
+    updateProjectsList();
     renderProjects();
     undoNote.remove();
     clearTimeout(timeoutId);
@@ -303,17 +296,17 @@ const deleteTask = (name, element) => {
   for (let i = 0; i < projects.length; i++) {
     const project = projects[i];
     const foundToDo = project.todos.find((todo) => todo.title == name);
-    // remove the todo just from the screen and wait 2s to allow the user to undo
-    // if the user doesn't undo the task will be removed from the projects
     if (typeof foundToDo !== "undefined") {
+      project.todos.splice(project.todos.indexOf(foundToDo), 1);
       element.remove();
+      updateProjectsList();
+      renderProjects();
+      // allow the user to undo the deletion
       const timeoutId = setTimeout(() => {
-        project.todos.splice(project.todos.indexOf(foundToDo), 1);
-        updateProjectsList();
-        renderProjects();
         undo.remove();
       }, 3000);
-      const undo = createUndoNote(timeoutId);
+
+      const undo = createUndoNote(timeoutId, foundToDo, project);
       const undo_wrapper = document.querySelector(".undo-wrapper");
       undo_wrapper.appendChild(undo);
       break;
