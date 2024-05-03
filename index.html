@@ -507,10 +507,53 @@
         </div>
         <div class="task_editor--chose-field">
           <input type="date" class="task_editor--input" id="todo-dueDate" />
-          <!-- <input
-            type="dropdown"
-            class="task_editor--input task_editor--input--priority"
-          /> -->
+          <!-- create button and set calednder icon and a text -->
+          <!--  then create input and hide it so user can only pick date form the popup of the input -->
+          <style>
+            .hide-input {
+              opacity: 0;
+              z-index: 999;
+              width: 100%;
+            }
+            .date-wrapper {
+              display: flex;
+              align-items: center;
+              position: relative;
+            }
+            .date-wrapper div {
+              background-color: transparent;
+              border: none;
+              cursor: pointer;
+              border: 1px solid #ccc;
+              padding: 2px 5px;
+              width: fit-content;
+              display: flex;
+              justify-content: center;
+            }
+            .date-wrapper input {
+              /* make the input on tob of the div */
+              position: absolute;
+              background-color: red;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+            }
+          </style>
+          <div class="date-wrapper">
+            <div>date</div>
+            <input class="hide-input" type="date" />
+          </div>
+          <script>
+            window.onload = function () {
+              var dateInput = document.querySelector(".date-wrapper input");
+              var dateDiv = document.querySelector(".date-wrapper div");
+
+              dateInput.addEventListener("change", function () {
+                dateDiv.textContent = dateInput.value;
+              });
+            };
+          </script>
           <select
             class="task_editor--input task_editor--input--priority"
             id="todo-priority"
