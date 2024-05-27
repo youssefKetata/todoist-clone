@@ -1,0 +1,561 @@
+:root {
+  --clr-primary: 255, 255, 255;
+  --clr-secondary: rgb(252, 250, 248);
+  --clr-accent: rgb(220, 76, 62);
+  --clr-accent-disabled: rgb(237, 165, 158);
+  --clr-accent-dark: rgb(168, 31, 0);
+  --clr-accent-light: rgb(255, 239, 229);
+  --clr-secondary-dark: rgb(243, 239, 236);
+  --btn-idle-tint: rgb(102, 102, 102);
+  --btn-hover-tint: rgb(26, 26, 26);
+  --btn-idle-tint-light: rgb(245, 245, 245);
+  --btn-text-idle: rgb(32, 32, 32);
+  --btn-hover-fill: rgb(229, 229, 229);
+
+  --reactist-font-family: system-ui, "Segoe UI", Roboto, "Helvetica Neue",
+    sans-serif;
+
+  --ff-primary: var(--reactist-font-family);
+  --ff-secondary: "Open Sans", sans-serif;
+
+  --fw-400: 400;
+  --fw-500: 500;
+  --fw-600: 600;
+  --fw-700: 700;
+
+  --fs-500: 1.1rem;
+  --fs-400: 1rem;
+  --fs-300: 0.9rem;
+  --fs-200: 0.8rem;
+  --fs-700: 2rem;
+  --fs-600: 1.3rem;
+
+  /*  */
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul,
+ol,
+a {
+  all: unset;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  font-family: var(--ff-primary);
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* css */
+.cdn-failback-error {
+  display: none;
+  color: rgb(233, 232, 231);
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  height: 100%;
+}
+
+.side-bar-container {
+  position: static;
+  --sidebar-width: 280px; /* Adjust default width */
+  position: relative;
+  padding: 12px;
+  background-color: var(--clr-secondary);
+  width: var(--sidebar-width);
+  max-width: 100% !important;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  margin-block: 1rem;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-block-end: 12px;
+}
+
+.user-menu-botton {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 0.5rem;
+  font-weight: var(--fw-600);
+  font-size: var(--fs-300);
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+.user-menu-botton:hover {
+  /* color: var(--clr-accent); */
+  background-color: var(--clr-secondary-dark);
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-info img {
+  height: 24px;
+  border-radius: 50%;
+}
+
+button svg {
+  align-self: center;
+}
+
+.sidebar-header-action {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  margin-left: auto;
+}
+
+button {
+  display: flex;
+  align-items: center;
+}
+
+.collapse_icon {
+  position: absolute;
+  right: 12px;
+  transition: margin-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+}
+
+.collapse_icon svg path {
+  fill: var(--btn-idle-tint);
+}
+
+.collapse_icon:hover {
+  background-color: var(--clr-secondary-dark);
+  border-radius: 5px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.collapse_icon:hover svg path {
+  fill: var(--btn-hover-tint);
+}
+
+.notification_icon {
+  --sidebar-toggle-button-expanded-offset: 40px;
+  margin-right: var(--sidebar-toggle-button-expanded-offset);
+  border: 1px solid transparent;
+}
+
+.notification_icon svg path {
+  fill: var(--btn-idle-tint);
+}
+
+.notification_icon:hover {
+  background-color: var(--clr-secondary-dark);
+  border-radius: 5px;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.notification_icon:hover svg path {
+  fill: var(--btn-hover-tint);
+}
+
+.button-add-task {
+  display: flex;
+  align-items: center;
+  color: var(--clr-accent-dark);
+  gap: 0.5rem;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: var(--fw-600);
+  font-size: var(--fs-300);
+  cursor: pointer;
+}
+
+.button-add-task:hover {
+  background-color: var(--clr-secondary-dark);
+}
+
+.navigation {
+  all: unset;
+  padding-block: 10px;
+}
+
+.navigation a {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding-block: 5px;
+  padding-inline: 10px;
+  border-radius: 5px;
+  font-size: var(--fs-300);
+  cursor: pointer;
+}
+
+.navigation a:hover {
+  background-color: var(--clr-secondary-dark);
+}
+
+.my-projects-nav_header {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  font-weight: var(--fw-600);
+  font-size: var(--fs-300);
+  padding-left: 4px;
+  color: var(--btn-idle-tint);
+  border-radius: 5px;
+  height: 34px;
+}
+.nb-tasks {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: var(--fw-400);
+  color: rgb(170, 170, 170);
+}
+
+.my-projects-nav_header > .add_project {
+  margin-left: auto;
+  margin-right: 4px;
+}
+
+.my-projects-nav_header:hover {
+  background-color: var(--clr-secondary-dark);
+}
+
+.my-projects-nav_header > button {
+  padding: 0;
+}
+
+.my-projects-nav_header > button svg path {
+  fill: var(--btn-idle-tint);
+}
+
+.my-projects-nav_header > button:hover svg path {
+  fill: var(--btn-hover-tint);
+}
+
+.projects_list {
+  display: flex;
+  width: 100%;
+}
+
+.main_content {
+  flex: 1; /* Fills remaining space */
+  padding: 3.5rem;
+  transition: padding-inline 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: rgb(var(--clr-primary));
+  padding-bottom: 8rem;
+}
+
+.main_content-title {
+  margin-block: 1rem;
+}
+
+/* dynamic padding on main content */
+.main_content > * {
+  padding-inline: 1rem;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+}
+
+.resize-handle {
+  width: 4px;
+  background-color: rgb(207, 207, 207);
+  cursor: col-resize;
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.resize-handle:hover {
+  opacity: 1;
+}
+
+/* media */
+@media (max-width: 750px) {
+  .resize-handle {
+    display: none;
+  }
+  .collapse_icon {
+    margin-right: -60px;
+  }
+  .main_content {
+    padding-inline: 2rem !important;
+  }
+  dialog[open] {
+    width: 100%;
+    margin-inline-start: 10px;
+    margin-inline-end: 10px;
+  }
+}
+
+/* dialog style */
+
+.dialog-wrapper {
+  animation: modal-disappear 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+  transform-origin: bottom center;
+  border: none;
+  max-width: 550px;
+  width: 100%;
+}
+
+.dialog-wrapper[open][data-dialog="non-modal"] {
+  border: 1px solid rgb(230, 230, 230);
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.dialog-wrapper[open][data-dialog="non-modal"] {
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  opacity: 1;
+  animation: none;
+}
+
+.dialog-wrapper[open] {
+  background-color: rgb(var(--clr-primary));
+  padding: 0rem;
+  border: none;
+  max-width: 550px;
+  border-radius: 10px;
+  box-shadow: 0 15px 50px 0 rgba(0, 0, 0, 0.35);
+  opacity: 0; /* Initially hidden */
+  animation: modal-appear 0.1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  transform-origin: bottom center;
+  margin: 10% auto;
+}
+
+.dialog-wrapper[open]::backdrop {
+  background: none;
+}
+
+.btn-open-dialog--non-modal {
+  color: var(--btn-idle-tint);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+.non-modal-dialog-wrapper {
+  margin-top: 5px;
+}
+.btn-open-dialog--non-modal:hover {
+  color: var(--clr-accent);
+}
+
+.icon_add {
+  background-color: rgb(220, 76, 62);
+  border-radius: 100%;
+  aspect-ratio: 1;
+  height: 21px;
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+}
+.icon_add > * {
+  visibility: visible;
+}
+.btn-open-dialog:hover .icon_add {
+  visibility: visible;
+  color: rgb(255, 255, 255);
+  transform: scale(0.846);
+}
+
+.non-modal-position {
+  position: relative;
+  top: 0;
+  box-shadow: none !important;
+}
+
+/* undo delete */
+.undo-wrapper {
+  position: absolute;
+  bottom: 20px;
+  right: 40px;
+  height: 200px;
+  display: flex;
+  gap: 5px;
+  flex-direction: column-reverse;
+  padding-block: 10px;
+  overflow-y: hidden;
+  z-index: 90;
+}
+
+.undo-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 99;
+  /* color should be the same as he */
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--clr-primary), 1) 0%,
+    rgba(var(--clr-primary), 0) 10%
+  );
+}
+.undo-note {
+  background-color: rgb(var(--clr-primary));
+  border: 1px solid var(--clr-accent);
+  padding-block: 8px;
+  padding-inline: 18px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 100px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.2s ease-out forwards;
+}
+.undo-note > .undo-btn {
+  font-size: 13px;
+  font-weight: var(--fw-600);
+  color: var(--clr-accent);
+}
+.undo-note > .undo-btn:hover {
+  text-decoration: underline;
+}
+.undo-note > .close-btn {
+  color: #757575;
+  margin-left: auto;
+  font-size: 10px;
+}
+
+.undo-note > .text-info {
+  color: #5f5f5f;
+  font-size: 13px;
+  font-weight: 600;
+}
+.undo-note > .close-btn:hover {
+  background-color: rgba(228, 225, 225, 0.795);
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Animation styles */
+@keyframes modal-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.6) translateY(20px);
+    display: none;
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+    display: block;
+  }
+}
+
+@keyframes modal-disappear {
+  from {
+    opacity: 1;
+    transform: scaleY(1);
+    display: block;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.6) translateY(20px);
+    display: none;
+  }
+}
+
+/* animate adding todo item */
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0.4);
+  }
+}
+
+.animate {
+  animation: slideIn 0.5s ease;
+}

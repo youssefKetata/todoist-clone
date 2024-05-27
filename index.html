@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/form.css" />
+    <link rel="stylesheet" href="css/task-item.css" />
+    <link rel="stylesheet" href="css/project-dialog.css" />
+    <title>To do app</title>
+  </head>
+  <body>
+    <!-- failback error -->
+    <div class="cdn-failback-error">
+      <svg
+        class="loading_screen--logo"
+        width="64"
+        height="64"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g fill="none" fill-rule="evenodd">
+          <path
+            class="logo_bg"
+            d="M56.000016 0h-48c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V8c0-4.4-3.6-8-8-8"
+            fill="#E44332"
+          ></path>
+          <g class="logo_stripe" fill="#FFF">
+            <path
+              d="M13.672368 29.985936c1.1304-.65152 25.34368-14.58496 25.89952-14.90592.5544-.32016.58224-1.30224-.03824-1.65632-.62096-.35408-1.79984-1.02368-2.23856-1.28048-.44656-.26048-1.24976-.40528-1.99472.02384-.30928.1784-21.00256 12.0768-21.69424
+      12.46992-.82784.47072-1.85248.4768-2.67744-.0008-.65152-.37696-10.92864-6.3488-10.92864-6.3488v5.39712c2.66016 1.54912 9.2744 5.40128 10.87744 6.30624.95664.54016 1.87232.52688 2.79488-.0048"
+            ></path>
+            <path
+              d="M13.672368 40.76952c1.1304-.65152 25.34368-14.58496 25.89952-14.90592.5544-.32.58224-1.30224-.03824-1.65632-.62096-.35408-1.79984-1.02368-2.23856-1.28048-.44656-.26048-1.24976-.40528-1.99472.02384-.30928.1784-21.00256 12.0768-21.69424
+      12.46992-.82784.47072-1.85248.4768-2.67744-.0008-.65152-.37696-10.92864-6.3488-10.92864-6.3488v5.39712c2.66016 1.54912 9.2744 5.40128 10.87744 6.30624.95664.54016 1.87232.52688 2.79488-.0048"
+            ></path>
+            <path
+              d="M13.672368 51.55312c1.1304-.65152 25.34368-14.58496 25.89952-14.90592.5544-.32.58224-1.30224-.03824-1.65632-.62096-.35408-1.79984-1.02368-2.23856-1.28048-.44656-.26048-1.24976-.40528-1.99472.02384-.30928.1784-21.00256 12.0768-21.69424
+      12.46992-.82784.47072-1.85248.4768-2.67744-.0008-.65152-.37696-10.92864-6.3488-10.92864-6.3488v5.39712c2.66016 1.54912 9.2744 5.40128 10.87744 6.30624.95664.54016 1.87232.52688 2.79488-.0048"
+            ></path>
+          </g>
+        </g>
+      </svg>
+      <h1>Todoist couldn't load the required files.</h1>
+    </div>
+    <div class="container">
+      <!-- side bar -->
+      <section class="side-bar-container">
+        <nav class="side-bar_navigation">
+          <div class="user-info">
+            <button aria-expanded="false" class="user-menu-botton">
+              <img
+                alt="profile image"
+                src="./assets/images/blank-profile-picture.jpg"
+              />
+              <span class="user-name">Youssef</span>
+              <svg
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                aria-hidden="true"
+              >
+                <path
+                  fill="none"
+                  fill-rule="evenodd"
+                  stroke="#666666"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m16 10-4 4-4-4"
+                ></path>
+              </svg>
+            </button>
+            <div class="sidebar-header-action">
+              <button
+                role="button"
+                class="notification_icon"
+                aria-label="notification button"
+              >
+                <svg
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="#666666"
+                    fill-rule="evenodd"
+                    d="m6.585 15.388-.101.113c-.286.322-.484.584-.484 1h12c0-.416-.198-.678-.484-1l-.101-.113c-.21-.233-.455-.505-.7-.887-.213-.33-.355-.551-.458-.79-.209-.482-.256-1.035-.4-2.71-.214-3.5-1.357-5.5-3.857-5.5s-3.643 2-3.857 5.5c-.144 1.675-.191 2.227-.4 2.71-.103.239-.245.46-.457.79-.246.382-.491.654-.701.887Zm10.511-2.312c-.083-.341-.131-.862-.241-2.148-.113-1.811-.469-3.392-1.237-4.544C14.8 5.157 13.57 4.5 12 4.5c-1.571 0-2.8.656-3.618 1.883-.768 1.152-1.124 2.733-1.237 4.544-.11 1.286-.158 1.807-.241 2.148-.062.253-.13.373-.46.884-.198.308-.373.504-.57.723-.074.081-.15.166-.232.261-.293.342-.642.822-.642 1.557a1 1 0 0 0 1 1h3a3 3 0 0 0 6 0h3a1 1 0 0 0 1-1c0-.735-.35-1.215-.642-1.557-.082-.095-.158-.18-.232-.261-.197-.22-.372-.415-.57-.723-.33-.511-.398-.63-.46-.884ZM14 17.5h-4a2 2 0 1 0 4 0Z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+              <button
+                rule="button"
+                class="collapse_icon"
+                aria-label="collapse button"
+              >
+                <svg
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="#666666"
+                    fill-rule="evenodd"
+                    d="M19 4.001H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-12a2 2 0 0 0-2-2Zm-15 2a1 1 0 0 1 1-1h4v14H5a1 1 0 0 1-1-1v-12Zm6 13h9a1 1 0 0 0 1-1v-12a1 1 0 0 0-1-1h-9v14Z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            tabindex="0"
+            type="button"
+            class="button-add-task"
+            id="openDialog"
+          >
+            <svg
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="#DC4C3E"
+                fill-rule="evenodd"
+                d="M12 23c6.075 0 11-4.925 11-11S18.075 1 12 1 1 5.925 1 12s4.925 11 11 11Zm-.711-16.5a.75.75 0 1 1 1.5 0v4.789H17.5a.75.75 0 0 1 0 1.5h-4.711V17.5a.75.75 0 0 1-1.5 0V12.79H6.5a.75.75 0 1 1 0-1.5h4.789V6.5Z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span>Add task</span>
+          </div>
+          <div class="navigation">
+            <div>
+              <ul id="navigation_list">
+                <li aria-labelledby="inbox">
+                  <a href="#">
+                    <svg
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="#DC4C3E"
+                        fill-rule="evenodd"
+                        d="M8.062 4h7.876a2 2 0 0 1 1.94 1.515l2.062 8.246c.04.159.06.322.06.486V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3.754a2 2 0 0 1 .06-.485L6.12 5.515A2 2 0 0 1 8.061 4Zm0 1a1 1 0 0 0-.97.758L5.03 14.004h4.78a.5.5 0 0 1 .44.496 1.75 1.75 0 1 0 3.5 0 .5.5 0 0 1 .44-.496h4.78L16.91 5.758a1 1 0 0 0-.97-.758H8.061Z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>Inbox</span></a
+                  >
+                </li>
+                <li>
+                  <a href="#">
+                    <svg
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <g fill="#666666" fill-rule="evenodd">
+                        <path
+                          fill-rule="nonzero"
+                          d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H6zm1 3h10a.5.5 0 1 1 0 1H7a.5.5 0 0 1 0-1z"
+                          fill="#666666"
+                        ></path>
+                        <text
+                          font-family="-apple-system, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
+                          font-size="9"
+                          transform="translate(4 2)"
+                          font-weight="500"
+                          fill="#666666"
+                        >
+                          <tspan
+                            x="8"
+                            y="15"
+                            text-anchor="middle"
+                            fill="#666666"
+                          >
+                            26
+                          </tspan>
+                        </text>
+                      </g>
+                    </svg>
+                    <span>Today</span></a
+                  >
+                </li>
+                <li>
+                  <a href="#">
+                    <svg
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="#666666"
+                        fill-rule="evenodd"
+                        d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H6Zm10 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-3-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-5 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm9-5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-5 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-3-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7 8a.5.5 0 0 0 0 1h10a.5.5 0 0 0 0-1H7Z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>Upcoming</span></a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="my-projects-nav">
+              <div class="my-projects-nav_header">
+                <span>My Projects</span>
+                <button
+                  aria-label="Add project"
+                  type="button"
+                  class="add_project"
+                  id="add_project"
+                >
+                  <svg
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="13"
+                    height="13"
+                  >
+                    <path
+                      fill="#666666"
+                      fill-rule="evenodd"
+                      d="M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z"
+                    ></path>
+                  </svg>
+                </button>
+                <button>
+                  <svg
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill="none"
+                      fill-rule="evenodd"
+                      stroke="#666666"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m16 10-4 4-4-4"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+              <div>
+                <ul id="projects_list">
+                  <!-- loaded with js -->
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </section>
+      <div class="resize-handle"></div>
+      <!-- main content -->
+      <section aria-label="Main content" id="content" class="main_content">
+        <!-- projects list -->
+        <div class="project-list">
+          <h2 class="main_content-title">Inbox</h2>
+          <ul class="pojects-ul" id="pojects-ul">
+            <li class="youssef">
+              <div class="task_list_item">
+                <!-- <div><svg></svg></div> -->
+                <button
+                  type="button"
+                  role="checkbox"
+                  aria-checked="false"
+                  aria-label="mark task as completed"
+                  class="task-checkbox"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="tb7nk6f"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M16.5056 9.00958C16.2128 8.71668 15.7379 8.71668 15.445 9.00958L10.6715 13.7831L8.72649 11.8381C8.43359 11.5452 7.95872 11.5452 7.66583 11.8381C7.37294 12.1309 7.37293 12.6058 7.66583 12.8987L10.1407 15.3736C10.297 15.5299 10.5051 15.6028 10.7097 15.5923C10.8889 15.5833 11.0655 15.5104 11.2023 15.3735L16.5056 10.0702C16.7985 9.77735 16.7985 9.30247 16.5056 9.00958Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                  <span class="task-checkbox-circle"></span>
+                </button>
+                <div class="task_list_item__content">
+                  <div class="task-title">name</div>
+                  <div class="task-description">description</div>
+                  <div class="task_list_item__info_tags" data-layout="list">
+                    <button
+                      type="button"
+                      aria-expanded="false"
+                      class="due_date_controls"
+                    >
+                      <span class="date date_future">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="12"
+                          height="12"
+                          fill="none"
+                          viewBox="0 0 12 12"
+                          class="calendar_icon"
+                        >
+                          <path
+                            fill="currentColor"
+                            fill-rule="evenodd"
+                            d="M9.5 1h-7A1.5 1.5 0 0 0 1 2.5v7A1.5 1.5 0 0 0 2.5 11h7A1.5 1.5 0 0 0 11 9.5v-7A1.5 1.5 0 0 0 9.5 1ZM2 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-7ZM8.75 8a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM3.5 4a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5Z"
+                            clip-rule="evenodd"
+                          ></path>
+                        </svg>
+                        Apr 11
+                      </span>
+                    </button>
+                  </div>
+                  <!--  -->
+                  <div class="task_list_item__actions">
+                    <button
+                      type="button"
+                      aria-label="Edit"
+                      data-action-hint="task-edit"
+                    >
+                      <svg width="24" height="24">
+                        <g fill="none" fill-rule="evenodd">
+                          <path
+                            fill="currentColor"
+                            d="M9.5 19h10a.5.5 0 1 1 0 1h-10a.5.5 0 1 1 0-1z"
+                          ></path>
+                          <path
+                            stroke="currentColor"
+                            d="M4.42 16.03a1.5 1.5 0 0 0-.43.9l-.22 2.02a.5.5 0 0 0 .55.55l2.02-.21a1.5 1.5 0 0 0 .9-.44L18.7 7.4a1.5 1.5 0 0 0 0-2.12l-.7-.7a1.5 1.5 0 0 0-2.13 0L4.42 16.02z"
+                          ></path>
+                        </g>
+                      </svg></button
+                    ><button
+                      type="button"
+                      aria-expanded="false"
+                      data-action-hint="task-scheduler"
+                      aria-label="Due date"
+                      class="due_date_controls"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                          d="M18 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM5 6a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6Zm12 10a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7 8a.5.5 0 0 0 0 1h10a.5.5 0 0 0 0-1H7Z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg></button
+                    ><button
+                      type="button"
+                      aria-label="Comment"
+                      data-action-hint="task-comment"
+                      class="task_list_item__comments_link"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        data-svgs-path="sm1/comments.svg"
+                      >
+                        <path
+                          fill="currentColor"
+                          fill-rule="nonzero"
+                          d="M11.707 20.793A1 1 0 0 1 10 20.086V18H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-4.5l-2.793 2.793zM11 20.086L14.086 17H19a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h6v3.086z"
+                        ></path>
+                      </svg></button
+                    ><button
+                      aria-expanded="false"
+                      aria-haspopup="menu"
+                      id=":rd:"
+                      aria-label="More task actions"
+                      data-testid="more_menu"
+                      data-action-hint="task-overflow-menu"
+                      type="button"
+                      aria-disabled="false"
+                      class=""
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                      >
+                        <g
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          transform="translate(3 10)"
+                        >
+                          <circle cx="2" cy="2" r="2"></circle>
+                          <circle cx="9" cy="2" r="2"></circle>
+                          <circle cx="16" cy="2" r="2"></circle>
+                        </g>
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="Delete"
+                      data-action-hint="task-delete"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        aria-hidden="true"
+                      >
+                        <g fill="none" fill-rule="evenodd">
+                          <path d="M0 0h24v24H0z"></path>
+                          <rect
+                            width="14"
+                            height="1"
+                            x="5"
+                            y="6"
+                            fill="currentColor"
+                            rx="0.5"
+                          ></rect>
+                          <path
+                            fill="currentColor"
+                            d="M10 9h1v8h-1V9zm3 0h1v8h-1V9z"
+                          ></path>
+                          <path
+                            stroke="currentColor"
+                            d="M17.5 6.5h-11V18A1.5 1.5 0 0 0 8 19.5h8a1.5 1.5 0 0 0 1.5-1.5V6.5zm-9 0h7V5A1.5 1.5 0 0 0 14 3.5h-4A1.5 1.5 0 0 0 8.5 5v1.5z"
+                          ></path>
+                        </g>
+                      </svg>
+                    </button>
+                  </div>
+                  <!--  -->
+                </div>
+              </div>
+              <div></div>
+            </li>
+          </ul>
+        </div>
+        <div id="project-list"></div>
+        <div id="non-modal-dialog-wrapper" class="non-modal-dialog-wrapper">
+          <button
+            class="btn btn-open-dialog btn-open-dialog--non-modal"
+            id="btn-open-dialog--non-modal"
+          >
+            <span class="icon_add">
+              <svg width="13" height="13">
+                <path
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                  d="M6 6V.5a.5.5 0 0 1 1 0V6h5.5a.5.5 0 1 1 0 1H7v5.5a.5.5 0 1 1-1 0V7H.5a.5.5 0 0 1 0-1H6z"
+                ></path>
+              </svg>
+            </span>
+            add task
+          </button>
+        </div>
+      </section>
+    </div>
+    <div id="project-dialog-wrapper"></div>
+
+    <dialog id="dialog-wrapper" class="dialog-wrapper" methode="dialog">
+      <form class="task_editor" id="newTodo-form">
+        <div class="task_editor--editing-area">
+          <div class="task_editor--input-fields">
+            <input
+              type="text"
+              class="task_editor--input task_editor--input--title"
+              placeholder="Task name"
+              id="todo-title"
+            />
+            <input
+              type="text"
+              class="task_editor--input task_editor--input--description"
+              placeholder="description"
+              id="todo-description"
+            />
+          </div>
+        </div>
+        <div class="task_editor--chose-field">
+          <input type="date" class="task_editor--input" id="todo-dueDate" />
+          <!-- <input
+            type="dropdown"
+            class="task_editor--input task_editor--input--priority"
+          /> -->
+          <select
+            class="task_editor--input task_editor--input--priority"
+            id="todo-priority"
+          ></select>
+
+          <!-- <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+            class="g1pQExb"
+            data-icon-name="priority-icon"
+            data-priority="1"
+          >
+            <path
+              fill="green"
+              fill-rule="evenodd"
+              d="M4.223 4.584A.5.5 0 0 0 4 5v14.5a.5.5 0 0 0 1 0v-5.723C5.886 13.262 7.05 13 8.5 13c.97 0 1.704.178 3.342.724 1.737.58 2.545.776 3.658.776 1.759 0 3.187-.357 4.277-1.084A.5.5 0 0 0 20 13V4.5a.5.5 0 0 0-.777-.416C18.313 4.69 17.075 5 15.5 5c-.97 0-1.704-.178-3.342-.724C10.421 3.696 9.613 3.5 8.5 3.5c-1.758 0-3.187.357-4.277 1.084Z"
+              clip-rule="evenodd"
+            ></path>
+          </svg> -->
+        </div>
+        <div class="task_editor--footer">
+          <select
+            aria-label="Select a project"
+            aria-controls="dropdown-select-1-popup"
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            type="button"
+            aria-disabled="false"
+            class="select-project"
+            id="todo-project"
+          ></select>
+          <div class="task_editor__footer__action-buttons">
+            <button
+              aria-label="Cancel"
+              type="button"
+              aria-disabled="false"
+              class="closeDialog"
+            >
+              <span class="">Cancel</span></button
+            ><button
+              disabled
+              aria-label="Add task"
+              type="submit"
+              formmethod="dialog"
+              aria-disabled="true"
+              class="add-task"
+              id="add-task"
+            >
+              <span class="">Add task</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </dialog>
+    <style></style>
+
+    <div class="undo-wrapper"></div>
+
+    <!-- js files -->
+    <script type="module" src="js/app.js" defer></script>
+    <script src="js/dynamic-sidebar.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,145 @@
+:root {
+  -blue-dark: rgba(36, 111, 224, 0.3);
+  --default: rgb(153 153 153);
+}
+
+ul,
+li {
+  all: unset;
+}
+
+.task_list_item {
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid rgb(238 238 238);
+}
+
+.task_list_item:hover .task_list_item__actions button {
+  opacity: 1;
+}
+
+.task_list_item__content {
+  display: flex;
+  flex-direction: column;
+  padding-block: 8px;
+  flex: 1;
+  position: relative;
+}
+
+.task-checkbox {
+  background-color: rgba(36, 111, 224, 0.1);
+  border-radius: 100%;
+  border: none;
+  cursor: pointer;
+  height: 18px;
+  position: relative;
+  width: 18px;
+  margin-top: 11px;
+}
+
+.task-checkbox:hover {
+  background-color: rgba(36, 111, 224, 0.2);
+  transition: opacity 150ms cubic-bezier(0.4, 0, 1, 1);
+}
+.task-checkbox > svg {
+  opacity: 0;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--default); /* color of the tick icon */
+  transition: opacity 150ms cubic-bezier(0.4, 0, 1, 1);
+}
+
+.task-checkbox:hover > svg {
+  opacity: 1;
+}
+
+.task-checkbox-circle {
+  border: 2px solid var(--default);
+  border-radius: 50%;
+  height: 18px;
+  aspect-ratio: 1;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.task-title {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+  word-break: break-word;
+}
+
+.task-description {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  color: var(--btn-idle-tint);
+}
+
+.task_list_item__info_tags {
+  margin-top: 3px;
+}
+.due_date_controls {
+  padding: 0;
+  color: var(--btn-idle-tint);
+  font-size: 12px;
+}
+
+/* Task List Item Actions(edit delete..) */
+
+.task_list_item__actions {
+  display: flex;
+  height: 24px;
+  justify-content: flex-end;
+  margin-right: -30px;
+  margin-top: 8px;
+  padding-left: 16px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.task_list_item__actions button {
+  align-items: center;
+  border-radius: 3px;
+  color: rgb(128, 128, 128);
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  height: 24px;
+  justify-content: center;
+  margin-left: 8px;
+  width: 24px;
+  opacity: 0;
+}
+
+.task_list_item__actions button:hover {
+  background-color: rgb(238, 238, 238);
+  color: var(--btn-text-idle);
+}
+
+/* task checked animation */
+.task-done-animation {
+  animation: taskChecked 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+  transform: background-color 0.3s cubic-bezier(0.4, 0, 1, 1);
+  /* background-color: currentColor !important; */
+}
+
+@keyframes taskChecked {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

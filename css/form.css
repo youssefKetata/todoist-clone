@@ -1,0 +1,106 @@
+:root {
+  --padding-inline-dialog: 1rem;
+}
+
+input {
+  all: unset;
+}
+
+.task_editor--editing-area {
+  padding-inline: var(--padding-inline-dialog);
+  padding-top: var(--padding-inline-dialog);
+}
+
+.task_editor--input-fields {
+  color: var(--btn-text-idle);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.task_editor--input--title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.task_editor--input--description {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.task_editor--chose-field {
+  display: flex;
+  flex-wrap: wrap;
+  padding-inline: var(--padding-inline-dialog);
+  padding-bottom: var(--padding-inline-dialog);
+  gap: 0.5rem;
+}
+
+.task_editor--footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.task_editor__footer__action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.task_editor__footer__action-buttons .add-task {
+  background-color: var(--clr-accent);
+  color: var(--clr-primary);
+}
+
+.task_editor__footer__action-buttons button {
+  padding-inline: 12px;
+  border-radius: 5px;
+  min-width: 68px;
+  height: 32px;
+  background-color: var(--btn-idle-tint-light);
+  color: var(--btn-text-idle);
+  font-weight: var(--fw-600);
+  font-size: var(--fs-300);
+}
+
+.task_editor__footer__action-buttons button:hover {
+  background-color: var(--clr-accent-dark);
+}
+
+.task_editor__footer__action-buttons button:disabled {
+  background-color: var(--clr-accent-disabled);
+  color: var(--clr-primary);
+  cursor: not-allowed;
+}
+
+.task_editor__footer__action-buttons .closeDialog:hover {
+  background-color: var(--btn-hover-fill);
+}
+
+select {
+  min-width: 5rem;
+  height: 28px;
+  border: 1px solid rgb(230, 230, 230);
+  border-radius: 5px;
+  display: flex;
+  gap: 20px;
+  -webkit-appearance: none; /* Safari and Chrome */
+  appearance: none; /* Standard syntax */
+}
+
+select:focus,
+select:hover {
+  background-color: var(--btn-idle-tint-light);
+  border-radius: 5px;
+}
+
+select:focus-visible {
+  outline: none;
+}
+
+.task_editor--footer {
+  border-top: 1px solid #e6e6e6;
+  padding: var(--padding-inline-dialog);
+}

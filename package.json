@@ -1,0 +1,15 @@
+{
+  "name": "p7_todo",
+  "version": "1.0.0",
+  "description": "Live server : https://todoist-clone-kappa.vercel.app/",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
