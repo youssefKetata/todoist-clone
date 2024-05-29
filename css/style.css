@@ -1,5 +1,9 @@
 :root {
+<<<<<<< HEAD
   --clr-primary: 255, 255, 255;
+=======
+  --clr-primary: rgb(255, 255, 255);
+>>>>>>> 7365700530177c828fca81571e0a1dd928f7a53d
   --clr-secondary: rgb(252, 250, 248);
   --clr-accent: rgb(220, 76, 62);
   --clr-accent-disabled: rgb(237, 165, 158);
@@ -317,7 +321,11 @@ button {
   flex: 1; /* Fills remaining space */
   padding: 3.5rem;
   transition: padding-inline 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+<<<<<<< HEAD
   background-color: rgb(var(--clr-primary));
+=======
+  background-color: var(--clr-primary);
+>>>>>>> 7365700530177c828fca81571e0a1dd928f7a53d
   padding-bottom: 8rem;
 }
 
@@ -335,6 +343,10 @@ button {
 
 .resize-handle {
   width: 4px;
+<<<<<<< HEAD
+=======
+  height: 100%;
+>>>>>>> 7365700530177c828fca81571e0a1dd928f7a53d
   background-color: rgb(207, 207, 207);
   cursor: col-resize;
   opacity: 0;
@@ -388,7 +400,11 @@ button {
 }
 
 .dialog-wrapper[open] {
+<<<<<<< HEAD
   background-color: rgb(var(--clr-primary));
+=======
+  background-color: var(--clr-primary);
+>>>>>>> 7365700530177c828fca81571e0a1dd928f7a53d
   padding: 0rem;
   border: none;
   max-width: 550px;
@@ -410,7 +426,10 @@ button {
   align-items: center;
   gap: 10px;
   width: 100%;
+<<<<<<< HEAD
   align-items: center;
+=======
+>>>>>>> 7365700530177c828fca81571e0a1dd928f7a53d
 }
 .non-modal-dialog-wrapper {
   margin-top: 5px;
@@ -445,6 +464,7 @@ button {
 
 /* undo delete */
 .undo-wrapper {
+<<<<<<< HEAD
   position: absolute;
   bottom: 20px;
   right: 40px;
@@ -473,6 +493,19 @@ button {
 }
 .undo-note {
   background-color: rgb(var(--clr-primary));
+=======
+  position: fixed;
+  bottom: 20px;
+  right: 40px;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 5px;
+}
+.undo-note {
+  background-color: var(--clr-primary);
+>>>>>>> 7365700530177c828fca81571e0a1dd928f7a53d
   border: 1px solid var(--clr-accent);
   padding-block: 8px;
   padding-inline: 18px;
