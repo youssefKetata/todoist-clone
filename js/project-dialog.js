@@ -82,3 +82,9 @@ function newProjectFunction() {
   createProject(projectTitle, projectColor);
   closeDialog();
 }
+// close the dialog when the user clicks outisde of it
+dialogModal.addEventListener("click", (event) => {
+  if (event.target === dialogModal) {
+    dialogModal.close();
+  }
+});

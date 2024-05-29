@@ -410,6 +410,7 @@ button {
   align-items: center;
   gap: 10px;
   width: 100%;
+  align-items: center;
 }
 .non-modal-dialog-wrapper {
   margin-top: 5px;

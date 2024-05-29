@@ -131,7 +131,7 @@ html * {
 
 .project_editor__footer .add-project {
   background-color: var(--clr-accent);
-  color: var(--clr-primary);
+  color: rgb(var(--clr-primary));
 }
 
 .project_editor__footer button {
@@ -151,7 +151,7 @@ html * {
 
 .project_editor__footer button:disabled {
   background-color: var(--clr-accent-disabled);
-  color: var(--clr-primary);
+  color: rgb(var(--clr-primary));
   cursor: not-allowed;
 }
 

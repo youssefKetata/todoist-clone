@@ -14,7 +14,6 @@ export default function appendTask(name, description, dueDate, priority) {
   button.setAttribute("aria-label", "mark task as completed");
   button.className = "task-checkbox";
 
-  // Create the <svg> element with appropriate attributes
   let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("width", "24");
   svg.setAttribute("height", "24");
@@ -23,7 +22,6 @@ export default function appendTask(name, description, dueDate, priority) {
   svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
   //   svg.className = "";
 
-  // Create the <path> element with appropriate attributes
   let path = document.createElementNS("http://www.w3.org/2000/svg", "path");
   path.setAttribute("fill-rule", "evenodd");
   path.setAttribute("clip-rule", "evenodd");
@@ -35,7 +33,6 @@ export default function appendTask(name, description, dueDate, priority) {
 
   svg.appendChild(path);
 
-  // Create the <span> element with class "task-checkbox-circle" and set its border color
   let span = document.createElement("span");
   span.className = "task-checkbox-circle";
   span.style.borderColor = getColorForPriority(priority);
@@ -73,8 +70,7 @@ export default function appendTask(name, description, dueDate, priority) {
   spanDate.className = "date date_future";
   spanDate.innerHTML =
     '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12" class="calendar_icon"><path fill="currentColor" fill-rule="evenodd" d="M9.5 1h-7A1.5 1.5 0 0 0 1 2.5v7A1.5 1.5 0 0 0 2.5 11h7A1.5 1.5 0 0 0 11 9.5v-7A1.5 1.5 0 0 0 9.5 1ZM2 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-7ZM8.75 8a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM3.5 4a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5Z" clip-rule="evenodd"></path></svg>' +
-    dueDate; // Set the due date dynamically
-
+    dueDate;
   dueDateButton.appendChild(spanDate);
 
   divTaskListInfoTags.appendChild(dueDateButton);
@@ -84,7 +80,6 @@ export default function appendTask(name, description, dueDate, priority) {
   divTaskListItem.appendChild(divTaskListItemContent);
 
   li.appendChild(divTaskListItem);
-  // li dragable
   li.draggable = true;
   li.addEventListener("dragstart", (e) => {});
   li.addEventListener("drag", (e) => {});
@@ -157,7 +152,6 @@ function createTaskActionsElement(name) {
   // moreButton.classList.add(" "); //
   moreButton.innerHTML = createMoreButtonSvg();
 
-  // Append buttons to the element
   element.appendChild(editButton);
   // element.appendChild(dueDateButton);
   element.appendChild(deleteBtn);

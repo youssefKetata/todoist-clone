@@ -51,7 +51,7 @@ input {
 
 .task_editor__footer__action-buttons .add-task {
   background-color: var(--clr-accent);
-  color: var(--clr-primary);
+  color: rgb(var(--clr-primary));
 }
 
 .task_editor__footer__action-buttons button {
@@ -71,7 +71,7 @@ input {
 
 .task_editor__footer__action-buttons button:disabled {
   background-color: var(--clr-accent-disabled);
-  color: var(--clr-primary);
+  color: rgb(var(--clr-primary));
   cursor: not-allowed;
 }
 
