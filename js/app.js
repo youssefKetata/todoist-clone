@@ -140,17 +140,25 @@ const today = new Date();
 const todayFormatted = today.toISOString().split("T")[0];
 document.getElementById("todo-dueDate").min = todayFormatted;
 
-function handleTodoFormSubmit(e, todoFrm = todoForm, dialog = myDialog) {
+function handleTodoFormSubmit(
+  e,
+  todoFrm = todoForm,
+  dialog = myDialog,
+  editFlag = false
+) {
   e.preventDefault();
 
   const title = document.querySelector("#todo-title").value;
-  console.log("title is : ", title);
   const description = document.querySelector("#todo-description").value;
   const dueDate = document.querySelector("#todo-dueDate").value;
   const priority = document.querySelector("#todo-priority").value;
   const project = document.querySelector("#todo-project").value;
   // find project that the todo belongs to
   const projectObject = projects.find((p) => p.title == project);
+  if (editFlag) {
+    let task = projectObject.todos.find((t) => t.title, todoTask.title);
+    console.log(task);
+  }
   const newTodo = createTodo(title, description, dueDate, priority);
   projectObject.todos.push(newTodo);
   updateProjectsList();
@@ -171,7 +179,8 @@ function renderProject(project) {
         todo.title,
         todo.description,
         todo.dueDate,
-        todo.priority
+        todo.priority,
+        todo
       );
       projects_ul.appendChild(task);
     }
@@ -289,6 +298,27 @@ const createUndoNote = (timeoutId, foundToDo, project) => {
   });
   undoNote.appendChild(closeBtn);
   return undoNote;
+};
+
+const fillTaskForm = (todoTask) => {
+  document.querySelector("#todo-title").value = todoTask.title;
+  document.querySelector("#todo-description").value = todoTask.description;
+  document.querySelector("#todo-dueDate").value = todoTask.date;
+  document.querySelector("#todo-priority").value = todoTask.priority;
+  document.querySelector("#todo-project").value = todoTask.project;
+};
+
+// edit task
+const editTask = (todoTask) => {
+  myDialog.showModal();
+  fillTaskForm(todoTask);
+  console.log("projects: ", projects);
+  todoForm.addEventListener("submit", handleTodoFormSubmit((editFlag = true)));
+  // handle submit
+
+  // pass the task
+  // chnage it
+  // update the ui
 };
 
 // delete a task
@@ -424,4 +454,4 @@ pojects_ul.addEventListener("dragenter", (e) => {
   console.log("dragenter", e.target);
 });
 
-export { deleteTask, createProject };
+export { deleteTask, createProject, editTask };

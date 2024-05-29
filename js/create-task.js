@@ -1,6 +1,7 @@
-import { priorities, deleteTask } from "./app.js";
-
-export default function appendTask(name, description, dueDate, priority) {
+import { priorities, deleteTask, editTask } from "./app.js";
+let todoTask = undefined;
+export default function appendTask(name, description, dueDate, priority, todo) {
+  todoTask = todo;
   let li = document.createElement("li");
   li.className = "";
 
@@ -119,6 +120,10 @@ function createTaskActionsElement(name) {
   editButton.dataset.actionHint = "task-edit";
   editButton.title = "Edit";
   editButton.innerHTML = createEditButtonSvg();
+  editButton.addEventListener("click", () => {
+    editTask(todoTask);
+    console.log("todo: ", todoTask);
+  });
 
   // Due date button
   const dueDateButton = document.createElement("button");
