@@ -131,11 +131,7 @@ html * {
 
 .project_editor__footer .add-project {
   background-color: var(--clr-accent);
-<<<<<<< HEAD
   color: rgb(var(--clr-primary));
-=======
-  color: var(--clr-primary);
->>>>>>> 7365700530177c828fca81571e0a1dd928f7a53d
 }
 
 .project_editor__footer button {
@@ -155,11 +151,7 @@ html * {
 
 .project_editor__footer button:disabled {
   background-color: var(--clr-accent-disabled);
-<<<<<<< HEAD
   color: rgb(var(--clr-primary));
-=======
-  color: var(--clr-primary);
->>>>>>> 7365700530177c828fca81571e0a1dd928f7a53d
   cursor: not-allowed;
 }
 
