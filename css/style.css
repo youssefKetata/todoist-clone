@@ -313,6 +313,16 @@ button {
   width: 100%;
 }
 
+.projects-list {
+  transition: height 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  overflow: hidden;
+}
+
+.rotate_icon {
+  transform: rotate(-90deg);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+}
+
 .main_content {
   flex: 1; /* Fills remaining space */
   padding: 3.5rem;

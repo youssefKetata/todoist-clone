@@ -20,11 +20,14 @@ let projects = [];
 openDialogButton.addEventListener("click", () => {
   if (!myDialog.open) {
     myDialog.showModal();
+    todoForm.addEventListener("submit", handleTodoFormSubmit);
+    enableAddTaskButton();
   }
 });
 
 closeDialog.addEventListener("click", () => {
   if (myDialog.open) {
+    todoForm.reset();
     myDialog.close();
   }
 });
@@ -84,7 +87,7 @@ if (!projectsList) {
 renderProjects();
 
 const enableAddTaskButton = (dialogHTML) => {
-  // acces the #add-task form dialogHTML
+  // acces the #add-task form dialogHTML for  clone dialog
   if (!dialogHTML) {
     var addTaskButton = document.querySelector("#add-task");
     var todoTitle = document.querySelector("#todo-title");
@@ -92,6 +95,10 @@ const enableAddTaskButton = (dialogHTML) => {
     var addTaskButton = dialogHTML.querySelector("#add-task");
     var todoTitle = dialogHTML.querySelector("#todo-title");
   }
+
+  // Enable or disable the addTaskButton based on the initial value of todoTitle
+  addTaskButton.disabled = todoTitle.value === "";
+  addTaskButton.setAttribute("aria-disabled", todoTitle.value === "");
 
   todoTitle.addEventListener("input", () => {
     if (todoTitle.value !== "") {
@@ -104,12 +111,10 @@ const enableAddTaskButton = (dialogHTML) => {
     }
   });
 };
-enableAddTaskButton();
 
 //update the project list in add-task dialog
 function addProjectOption(project) {
   const option = document.createElement("option");
-  console.log("project name is : ", project.title === "default");
   project.title === "default" && (option.defaultSelected = true);
   option.value = project.title;
   option.textContent = project.title;
@@ -144,7 +149,8 @@ function handleTodoFormSubmit(
   e,
   todoFrm = todoForm,
   dialog = myDialog,
-  editFlag = false
+  editFlag = false,
+  todoObject = undefined
 ) {
   e.preventDefault();
 
@@ -154,23 +160,37 @@ function handleTodoFormSubmit(
   const priority = document.querySelector("#todo-priority").value;
   const project = document.querySelector("#todo-project").value;
   // find project that the todo belongs to
-  const projectObject = projects.find((p) => p.title == project);
-  if (editFlag) {
-    let task = projectObject.todos.find((t) => t.title, todoTask.title);
-    console.log(task);
+  const newProject = projects.find((p) => p.title == project);
+  if (editFlag === true) {
+    const project = projects.find((p) => p.title == todoObject.project);
+    const todo = project.todos.find((t) => t.title == todoObject.title);
+    // update todo
+    todo.title = title;
+    todo.description = description;
+    todo.dueDate = dueDate;
+    todo.priority = priority;
+    todo.project = newProject.title;
+    //if the project is changed, remove the todo from the old project
+    if (newProject.title !== project.title) {
+      project.todos.splice(project.todos.indexOf(todo), 1);
+      newProject.todos.push(todo);
+    }
+
+    // remove the event listener
+    todoForm.removeEventListener("submit", gloablEdit.handleEditSubmit);
+  } else if (editFlag === false) {
+    const newTodo = createTodo(title, description, dueDate, priority, project);
+    newProject.todos.push(newTodo);
+    todoForm.removeEventListener("submit", handleTodoFormSubmit);
   }
-  const newTodo = createTodo(title, description, dueDate, priority);
-  projectObject.todos.push(newTodo);
   updateProjectsList();
   updateSideBarProjectsList();
-
   todoFrm.reset();
   dialog.close();
   renderProjects();
 }
 
 // listen for form submission
-todoForm.addEventListener("submit", handleTodoFormSubmit);
 
 function renderProject(project) {
   project.todos.forEach((todo) => {
@@ -301,24 +321,29 @@ const createUndoNote = (timeoutId, foundToDo, project) => {
 };
 
 const fillTaskForm = (todoTask) => {
+  todoForm.reset();
   document.querySelector("#todo-title").value = todoTask.title;
   document.querySelector("#todo-description").value = todoTask.description;
-  document.querySelector("#todo-dueDate").value = todoTask.date;
+  document.querySelector("#todo-dueDate").value = todoTask.dueDate;
   document.querySelector("#todo-priority").value = todoTask.priority;
   document.querySelector("#todo-project").value = todoTask.project;
 };
-
+// global variable to remove eventListenre handleEditSubmit
+const gloablEdit = {};
 // edit task
 const editTask = (todoTask) => {
   myDialog.showModal();
   fillTaskForm(todoTask);
-  console.log("projects: ", projects);
-  todoForm.addEventListener("submit", handleTodoFormSubmit((editFlag = true)));
-  // handle submit
+  enableAddTaskButton();
 
-  // pass the task
-  // chnage it
-  // update the ui
+  console.log("editing task: ", todoTask);
+  const handleEditSubmit = (e) => {
+    handleTodoFormSubmit(e, undefined, undefined, true, todoTask);
+  };
+  gloablEdit.handleEditSubmit = handleEditSubmit;
+
+  todoForm.removeEventListener("submit", handleTodoFormSubmit);
+  todoForm.addEventListener("submit", handleEditSubmit);
 };
 
 // delete a task
@@ -442,16 +467,15 @@ projectsSideBarList.addEventListener("click", (e) => {
   renderProjects(project);
 });
 
-const navigation_list = document.querySelector("#navigation_list");
-navigation_list.addEventListener("click", (e) => {
-  console.log(e.target.closest("li"));
-});
+// const navigation_list = document.querySelector("#navigation_list");
+// navigation_list.addEventListener("click", (e) => {
+//   console.log(e.target.closest("li"));
+// });
 
-// test
-const pojects_ul = document.querySelector("#pojects-ul");
-pojects_ul.addEventListener("dragenter", (e) => {
-  e.preventDefault();
-  console.log("dragenter", e.target);
-});
+// // test
+// const pojects_ul = document.querySelector("#pojects-ul");
+// pojects_ul.addEventListener("dragenter", (e) => {
+//   e.preventDefault();
+// });
 
 export { deleteTask, createProject, editTask };

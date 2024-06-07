@@ -1,7 +1,6 @@
 import { priorities, deleteTask, editTask } from "./app.js";
-let todoTask = undefined;
+// pass only todo vairable to this function
 export default function appendTask(name, description, dueDate, priority, todo) {
-  todoTask = todo;
   let li = document.createElement("li");
   li.className = "";
 
@@ -89,7 +88,7 @@ export default function appendTask(name, description, dueDate, priority, todo) {
   let divEmpty = document.createElement("div");
 
   li.appendChild(divEmpty);
-  const taskActions = createTaskActionsElement(name);
+  const taskActions = createTaskActionsElement(name, todo);
   divTaskListItemContent.appendChild(taskActions);
 
   return li;
@@ -109,7 +108,7 @@ function getColorForPriority(priority) {
   }
 }
 
-function createTaskActionsElement(name) {
+function createTaskActionsElement(name, todoTask) {
   const element = document.createElement("div");
   element.classList.add("task_list_item__actions");
 
@@ -122,7 +121,6 @@ function createTaskActionsElement(name) {
   editButton.innerHTML = createEditButtonSvg();
   editButton.addEventListener("click", () => {
     editTask(todoTask);
-    console.log("todo: ", todoTask);
   });
 
   // Due date button
